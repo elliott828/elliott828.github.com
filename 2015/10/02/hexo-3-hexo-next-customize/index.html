@@ -1,0 +1,734 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="google-site-verification" content="-hIKy4njeS0VoSYzKTofmv6kqKt5CyTP4IVIlIWh1N0" />
+<meta name="baidu-site-verification" content="14CLULlEjC" />
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,blog,git," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="不了解css,js和swig，重新看了一次主题使用介绍，又大致过了一遍hexo和NexT的基本配置文件，继续对这个hexo博客进行配置。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo博客优化 Part II">
+<meta property="og:url" content="http://elliott828.github.io/2015/10/02/hexo-3-hexo-next-customize/index.html">
+<meta property="og:site_name" content="Exity">
+<meta property="og:description" content="不了解css,js和swig，重新看了一次主题使用介绍，又大致过了一遍hexo和NexT的基本配置文件，继续对这个hexo博客进行配置。">
+<meta property="og:image" content="http://elliott828.github.io/img/sitemap_screenshot.png">
+<meta property="og:image" content="http://elliott828.github.io/img/stormtrooper.png">
+<meta property="og:updated_time" content="2015-11-13T07:04:15.954Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo博客优化 Part II">
+<meta name="twitter:description" content="不了解css,js和swig，重新看了一次主题使用介绍，又大致过了一遍hexo和NexT的基本配置文件，继续对这个hexo博客进行配置。">
+<meta name="twitter:image" content="http://elliott828.github.io/img/sitemap_screenshot.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Hexo博客优化 Part II | Exity </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '68396327-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?00cfd9a9530e4098a08a17043202505a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Exity</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'f-s39SMgF52UH9GHejVp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Hexo博客优化 Part II
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-02T22:34:40+08:00" content="2015-10-02">
+            2015-10-02
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Hexo-博客技术/" itemprop="url" rel="index">
+                  <span itemprop="name">Hexo|博客技术</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/02/hexo-3-hexo-next-customize/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/02/hexo-3-hexo-next-customize/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>不了解<code>css</code>,<code>js</code>和<code>swig</code>，重新看了一次主题使用介绍，又大致过了一遍<code>hexo</code>和<code>NexT</code>的基本配置文件，继续对这个hexo博客进行配置。<br><a id="more"></a></p>
+<h2 id="配置文件-config-yml"><a href="#配置文件-config-yml" class="headerlink" title="配置文件 _config.yml"></a>配置文件 _config.yml</h2><p>在重新看这个配置文件之前已经Google了一大圈，发现普通自建博客的解决方案，Hexo都提供了最简洁的方案，Hexo已经尽最大可能降低了配置的时间成本。这个特点集中体现在站点配置文件或者主题的配置文件<code>_config.yml</code>文件中。以下修改均发生在主题文件夹的配置文件中。</p>
+<h3 id="代码高亮主题-Code-Highlight-Theme"><a href="#代码高亮主题-Code-Highlight-Theme" class="headerlink" title="代码高亮主题 Code Highlight Theme"></a>代码高亮主题 Code Highlight Theme</h3><p>Hexo中代码高亮的方案取自Github的资源<a href="https://github.com/chriskempson/tomorrow-theme" target="_blank" rel="external">tommorow主题</a>。默认为<code>tomorrow</code>白色底纹的高亮设定，配置文件中代码为<code>normal</code>， 我把它改成<code>night eighties</code></p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">highlight_theme:</span> night eighties</div></pre></td></tr></table></figure>
+<h3 id="站点地图-Sitemap"><a href="#站点地图-Sitemap" class="headerlink" title="站点地图 Sitemap"></a>站点地图 Sitemap</h3><p>在git bash中输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-generator-sitemap --save</div><div class="line">$ npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure></p>
+<p>生成<code>sitemap.xml</code>和<code>baidusitemap.xml</code>两份站点地图文件(其实我到现在还不知道，这两份文件放在哪儿了,然而位置不重要)。<br>这时候在浏览器地址栏输入<code>博客地址/sitemap.xml</code>(如，我输入: papacochon.com/sitemap.xml)，应该可以返回以下截图中的内容，否则说明sitemap没有成功创建。<br><img src="/img/sitemap_screenshot.png" alt="sitemap"></p>
+<p>同时配置文件中添加：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">sitemap:</span></div><div class="line"><span class="symbol">  path:</span> sitemap.xml</div><div class="line"><span class="symbol"></span></div><div class="line">baidusitemap:</div><div class="line"><span class="symbol">  pth:</span> baidusitemap.xml</div></pre></td></tr></table></figure></p>
+<p>可去<a href="http://zhanzhang.baidu.com/site/index?action=add" target="_blank" rel="external">百度</a>和<a href="http://www.sousuoyinqingtijiao.com/360/" target="_blank" rel="external">360</a>提交搜索结果(后者未验证)。如果有梯子，也可以去谷歌提交一下。谷歌度娘均需要验证，顺着提示的验证方法去做。<br>提示：如果选用添加HTML标签的验证方法，需要将标签添加在以下文件中：<br>E:\Hexo\themes\next\layout_partials\head.swig<br>举个栗子(前三行是原有的，后两行是添加的标签)：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge,chrome=1"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1, maximum-scale=1"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"google-site-verification"</span> <span class="attr">content</span>=<span class="string">"XXXXXXXXXXX"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"baidu-site-verification"</span> <span class="attr">content</span>=<span class="string">"XXXXXXXXXXX"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p>验证成功后，如有需要，在相应的提交站点的位置输入<code>sitemap.xml</code>即可，不再赘述。</p>
+<h3 id="Tab上的图标-favicon"><a href="#Tab上的图标-favicon" class="headerlink" title="Tab上的图标 favicon"></a>Tab上的图标 favicon</h3><p>我很好奇，访问一个站点或者博客的时候，经常可以在那个页面的tab上看到个性化的图标。查了查，原来这图标是有名字的，名叫<code>favicon</code>！可是我想要设置一个我的favicon的热情立即被一堆复杂的<code>html</code>/<code>css</code>/<code>ejs</code>/blabla的攻略给浇灭了。然而hexo还是很体贴的提供了一个简洁的方案。将<code>favicon.ico</code>放在站点根目录的source文件夹下，然后在配置文件中设置(其实默认已经设定好了，就等你放<code>.ico</code>文件了)，什么？没有<code>favicon.ico</code>怎么办？去搜”favicon generator”能找出好多网站提供文件格式转换服务。<br>这是我的favicon：<br><img src="/img/stormtrooper.png" alt="stormtrooper"></p>
+<h2 id="边栏头像-Sidebar-Profile"><a href="#边栏头像-Sidebar-Profile" class="headerlink" title="边栏头像 Sidebar Profile"></a>边栏头像 Sidebar Profile</h2><p>侧边栏默认的头像是一个矩形框，把它改成圆哒  ╮(╯▽╰)╭<br><strong>注意</strong>:上传的头像最好是一个正方形，不然变形以后就会变成椭圆。。。<br>先找到对应路径下的文件E:\Hexo\themes\next\source\css_common_section\sidebar.styl<br>然后做一下修改(添加的部分用<code>start</code>和<code>end</code>标记出来了)：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.site-author-image</span> &#123;</div><div class="line">  <span class="attribute">display</span>: block;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">0</span> auto;</div><div class="line">  <span class="attribute">max-width</span>: <span class="number">96px</span>;</div><div class="line">  <span class="attribute">height</span>: auto;</div><div class="line">  <span class="attribute">border</span>: <span class="number">2px</span> solid <span class="number">#333</span>;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">2px</span>;</div><div class="line">  </div><div class="line">  <span class="comment">/* start*/</span></div><div class="line">  <span class="attribute">border-radius</span>: <span class="number">90%</span></div><div class="line">  webkit-transition: <span class="number">1.4s</span> all;</div><div class="line">  <span class="attribute">moz-transition</span>: <span class="number">1.4s</span> all;</div><div class="line">  <span class="attribute">ms-transition</span>: <span class="number">1.4s</span> all;</div><div class="line">  <span class="attribute">transition</span>: <span class="number">1.4s</span> all;</div><div class="line">  <span class="comment">/* end */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>(sorry上面这段code是抄的，然而已经忘了是从哪位大神的博客上剽窃的了，看到请见谅。。。)</p>
+<h2 id="字体设置-Fonts"><a href="#字体设置-Fonts" class="headerlink" title="字体设置 Fonts"></a>字体设置 Fonts</h2><p><a href="http://theme-next.iissnan.com/" target="_blank" rel="external">官方的文档</a>中说修改这个文件就行(请对应到自己的站点文件夹)：<br>E:\Hexo\themes\next\source\css_variables\custom.styl<br>于是我就兴冲冲的改了：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$font</span>-family-headings = <span class="string">"Microsoft YaHei"</span>, Cambria, STZhongsong, Calibri <span class="regexp">//</span> 标题，修改成你期望的字体族</div><div class="line"><span class="variable">$font</span>-family-base = Georgia, STFangsong, <span class="string">"Microsoft YaHei"</span>, <span class="string">"Courrier New"</span> <span class="regexp">//</span> 修改成你期望的字体族</div></pre></td></tr></table></figure></p>
+<p>然而并没有生效。。。<br>于是又折腾折腾找到了这个神奇的文件：<br>E:\Hexo\themes\next\source\css_variables\base.styl<br>这里面你可以看到一堆字体、字号、颜色的基础配置。<br>注意观察那些<code>$</code>符号，有玄机哦~扯远了，我厚颜无耻地把字体的基础配置也改了。<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// Font families.</div><div class="line">$<span class="built_in">font</span>-family-sans-serif   = <span class="string">"Avenir Next"</span>, Avenir, Tahoma, Vendana, sans-serif, Cambria</div><div class="line">$<span class="built_in">font</span>-family-serif        = <span class="string">"PT Serif"</span>, Cambria, Georgia, <span class="string">"Times New Roman"</span>, serif</div><div class="line">$<span class="built_in">font</span>-family-monospace    = <span class="string">"Courier New"</span>, <span class="string">"PT Mono"</span>, Consolas, Monaco, Menlo, monospace</div><div class="line">$<span class="built_in">font</span>-family-<span class="built_in">chinese</span>      = <span class="string">"STFangsong"</span>, <span class="string">"STZhongsong"</span>, <span class="string">"Hiragino Sans GB"</span>, <span class="string">"Microsoft YaHei"</span></div><div class="line">$<span class="built_in">font</span>-family-base         = Cambria, <span class="string">"Century Gothic"</span>, $<span class="built_in">font</span>-family-<span class="built_in">chinese</span>, sans-serif</div><div class="line">$<span class="built_in">font</span>-family-headings     = Cambria, Georgia, $<span class="built_in">font</span>-family-<span class="built_in">chinese</span>, <span class="string">"Times New Roman"</span>, serif</div><div class="line">$<span class="built_in">font</span>-family-posts        = $<span class="built_in">font</span>-family-base</div></pre></td></tr></table></figure></p>
+<p>记不得原先是啥样子了，总之这是我理想的配置，仅供参考。</p>
+<p>全部设定完成以后，在git bash里重新部署一遍。<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">hexo clean</span></div><div class="line">hexo d -g</div></pre></td></tr></table></figure></p>
+<p>啊哈，大功告成。</p>
+<hr>
+<p>其实还有很多想改的，比如上传图片自带边框，还不知道怎么去掉这些border。。。慢慢来。。。<br> (￣o￣) . z Z</p>
+<p><a href="http://papacochon/2015/10/02/hexo-2_set-the-theme/" target="_blank" rel="external">Hexo博客优化 Part I 在这里</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag">#Hexo</a>
+          
+            <a href="/tags/blog/" rel="tag">#blog</a>
+          
+            <a href="/tags/git/" rel="tag">#git</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/04/hexo-4-sync-hexo-between-2-devices/" rel="prev">两台设备中同步Hexo博客</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/02/Codage-7-uninstall-sogou-pinyin/" rel="next">Ubuntu 14.04 卸载搜狗拼音输入法及后续问题解决</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/10/02/hexo-3-hexo-next-customize/"
+                   data-title="Hexo博客优化 Part II" data-url="http://elliott828.github.io/2015/10/02/hexo-3-hexo-next-customize/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar_storm_cat_white.png" alt="Papa Cochon" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Papa Cochon</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">70</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name"></p>
+            
+              <span class="links-of-author-item">
+              <a href="http://monkey0105.github.io/" target="_blank">大师兄</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件-config-yml"><span class="nav-number">1.</span> <span class="nav-text">配置文件 _config.yml</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码高亮主题-Code-Highlight-Theme"><span class="nav-number">1.1.</span> <span class="nav-text">代码高亮主题 Code Highlight Theme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#站点地图-Sitemap"><span class="nav-number">1.2.</span> <span class="nav-text">站点地图 Sitemap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tab上的图标-favicon"><span class="nav-number">1.3.</span> <span class="nav-text">Tab上的图标 favicon</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#边栏头像-Sidebar-Profile"><span class="nav-number">2.</span> <span class="nav-text">边栏头像 Sidebar Profile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体设置-Fonts"><span class="nav-number">3.</span> <span class="nav-text">字体设置 Fonts</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Papa Cochon</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="visit-statistics">
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<span id="busuanzi_container_site_pv">
+		<span id="busuanzi_value_site_pv"></span> hits from
+	</span>
+	
+	<span id="busuanzi_container_site_uv">
+		<span id="busuanzi_value_site_uv"></span> visitors 
+	</span>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"papacochon"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

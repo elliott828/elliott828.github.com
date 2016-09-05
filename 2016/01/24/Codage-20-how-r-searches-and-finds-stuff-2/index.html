@@ -1,0 +1,803 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="google-site-verification" content="-hIKy4njeS0VoSYzKTofmv6kqKt5CyTP4IVIlIWh1N0" />
+<meta name="baidu-site-verification" content="14CLULlEjC" />
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="R,译文,environment," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="上一部分(你以为我想拆成两部分啊，太长了啊 o(╯□╰)o)讲到了
+
+环境(空环境、全局环境、封装环境、包的关联环境、namespace:base)
+R的检索路线
+依赖项和导入项的区别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R如何找对象？ - PART II">
+<meta property="og:url" content="http://elliott828.github.io/2016/01/24/Codage-20-how-r-searches-and-finds-stuff-2/index.html">
+<meta property="og:site_name" content="Exity">
+<meta property="og:description" content="上一部分(你以为我想拆成两部分啊，太长了啊 o(╯□╰)o)讲到了
+
+环境(空环境、全局环境、封装环境、包的关联环境、namespace:base)
+R的检索路线
+依赖项和导入项的区别">
+<meta property="og:image" content="http://7xndoy.com1.z0.glb.clouddn.com/Codage-20-img1-environment-property.png">
+<meta property="og:image" content="http://7xndoy.com1.z0.glb.clouddn.com/Codage-20-img2-environment-execution.png">
+<meta property="og:image" content="http://7xndoy.com1.z0.glb.clouddn.com/Codage-20-img3-map-of-the-world-complete.png">
+<meta property="og:updated_time" content="2016-01-26T07:33:41.846Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R如何找对象？ - PART II">
+<meta name="twitter:description" content="上一部分(你以为我想拆成两部分啊，太长了啊 o(╯□╰)o)讲到了
+
+环境(空环境、全局环境、封装环境、包的关联环境、namespace:base)
+R的检索路线
+依赖项和导入项的区别">
+<meta name="twitter:image" content="http://7xndoy.com1.z0.glb.clouddn.com/Codage-20-img1-environment-property.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> R如何找对象？ - PART II | Exity </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '68396327-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?00cfd9a9530e4098a08a17043202505a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Exity</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'f-s39SMgF52UH9GHejVp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              R如何找对象？ - PART II
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-01-24T10:26:28+08:00" content="2016-01-24">
+            2016-01-24
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Codage-编程/" itemprop="url" rel="index">
+                  <span itemprop="name">Codage|编程</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/01/24/Codage-20-how-r-searches-and-finds-stuff-2/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/24/Codage-20-how-r-searches-and-finds-stuff-2/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>上一部分(你以为我想拆成两部分啊，太长了啊 o(╯□╰)o)讲到了</p>
+<ul>
+<li>环境(空环境、全局环境、封装环境、包的关联环境、<code>namespace:base</code>)</li>
+<li>R的检索路线</li>
+<li>依赖项和导入项的区别</li>
+</ul>
+<a id="more"></a>
+<h2 id="紫色虚线"><a href="#紫色虚线" class="headerlink" title="紫色虚线"></a>紫色虚线</h2><p>跟其它对象一样，函数也住在环境中。而函数自身也有个<strong>指针属性</strong>，指向它们可以运行的环境。当你创建一个函数时，这个属性被自动设定为指向函数创建的环境。所以函数创建和<strong>将要</strong>运行的环境，是一样儿一样儿的。</p>
+<p><img src="http://7xndoy.com1.z0.glb.clouddn.com/Codage-20-img1-environment-property.png" alt="img1"></p>
+<p>“函数将要运行的环境”是什么意思呢？<br>上一部分曾经提到，函数一旦运行就会创建一个其特有的环境。我们也提到过每个环境都有一个封装环境。那么是哪个环境封装了函数的新环境呢？<br>这个封装环境被函数的<strong>环境属性</strong>所指定。这个环境也是“函数将要运行的环境”。它<em>并不一定</em>是拥有函数的环境。它被函数的环境属性控制。</p>
+<p>我们可以通过<code>environment()</code>来获得函数对象的环境属性(回想一下，第一部分我们提到<code>environment()</code>只以函数作为输入参数)。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">MyFunction &lt;- <span class="keyword">function</span>() &#123;&#125; </div><div class="line">environment(MyFunction)</div></pre></td></tr></table></figure>
+<pre><code>## &lt;environment: R_GlobalEnv&gt;
+</code></pre><p>运行<code>MyFunction()</code>时，R在执行函数定义的<code>{}</code>中的语句，环境则如下图所示：</p>
+<p><img src="http://7xndoy.com1.z0.glb.clouddn.com/Codage-20-img2-environment-execution.png" alt="img2"></p>
+<p>默认情况下，R将函数的环境属性设置为函数被创建的环境(拥有此函数的环境)。但函数的执行环境和拥有函数的环境并不一定非得是一样的。要不，换一个环境试试看？</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MyFunction &lt;- <span class="keyword">function</span>() &#123; &#125; </div><div class="line">newEnvironment &lt;- new.env() </div><div class="line">environment(MyFunction) &lt;- newEnvironment </div><div class="line">environment(MyFunction)</div></pre></td></tr></table></figure>
+<pre><code>## &lt;environment: 0x000000000e895628&gt;
+</code></pre><p>上面的代码执行以后，<code>environment(MyFunction)</code>已经不再返回<code>R_GlobalEnv</code>了。</p>
+<p>另一种查看函数的环境属性的方法是直接打印这个函数。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MyFunction</div></pre></td></tr></table></figure>
+<pre><code>## function() { } 
+## &lt;environment: 0x000000000e895628&gt;
+</code></pre><p>对函数<code>sd()</code>做同样的操作：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">environment(sd)</div></pre></td></tr></table></figure>
+<pre><code>## &lt;environment: namespace:stats&gt; 
+</code></pre><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sd</div></pre></td></tr></table></figure>
+<pre><code>## function (x, na.rm = FALSE) 
+## { 
+##   ... (removed for brevity) 
+## } 
+## &lt;bytecode: 000000000E7F2EA0&gt;
+## &lt;environment: namespace:stats&gt;
+</code></pre><p>再来看下面这段代码：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">age &lt;- <span class="number">32</span> </div><div class="line"></div><div class="line">MyFunction &lt;- <span class="keyword">function</span>()&#123; </div><div class="line">    age &lt;- <span class="number">22</span> </div><div class="line">    FromLocal &lt;- <span class="keyword">function</span>() &#123;print(age + <span class="number">1</span>)&#125; </div><div class="line">    FromGlobal &lt;- <span class="keyword">function</span>() &#123;print(age + <span class="number">1</span>)&#125; </div><div class="line">    NoSearch &lt;-  <span class="keyword">function</span>() &#123;age &lt;- <span class="number">11</span>; print(age + <span class="number">1</span>)&#125; </div><div class="line">    environment(FromGlobal) &lt;- .GlobalEnv </div><div class="line">    FromLocal() </div><div class="line">    FromGlobal() </div><div class="line">    NoSearch()</div><div class="line">&#125; </div><div class="line"></div><div class="line">MyFunction()</div></pre></td></tr></table></figure>
+<pre><code>## [1] 23 
+## [1] 33 
+## [1] 12
+</code></pre><p>这段代码是如何运作的？</p>
+<ol>
+<li><code>FromLocal()</code>的封装环境是<code>MyFunciton()</code>(内部)的环境，也就是<code>FromLocal()</code>被创建的环境，这也是R以默认规则执行的结果。<br>当R查找<code>FromLocal()</code>中的<code>age</code>变量时，(由于<code>FromLocal()</code>内并没有此变量的赋值，)它会找到<code>MyFunction()</code>的环境中，抓取<code>age &lt;- 22</code>然后对这个变量加1；</li>
+<li><code>FromGlobal()</code>的封装环境是<code>R_GlobalEnv</code>因为我们用<code>environment()</code>函数将<code>.GlobalEnv</code>赋值给了它的环境属性。R在<code>FromGlobal()</code>内部查找不到<code>age</code>变量的赋值，便向其封装环境发起查找，抓取<code>R_GlobalEnv</code>中的语句<code>age &lt;- 32</code>并在此变量基础上加1；</li>
+<li><code>NoSearch()</code>内部已经有了<code>age</code>对象，所以这个函数可以直接在其衍生的内部环境中找到想要的变量而不用向它被封装的环境求助。</li>
+</ol>
+<p>这解释了我们地图里的那些紫色虚线。<br>如果你在<code>package:&lt;name&gt;</code>环境中检视函数的环境属性，你会看到他们全部指向<code>namespace:&lt;name&gt;</code>环境。</p>
+<p>让我们来验证一下：<br>获取<code>package:stats</code>中的标准差函数并查看它的环境属性。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">statsPackageEnv &lt;- as.environment(<span class="string">"package:stats"</span>) </div><div class="line">sdFunc &lt;- get(<span class="string">"sd"</span>, envir = statsPackageEnv) </div><div class="line">environment(sdFunc)</div></pre></td></tr></table></figure>
+<pre><code>## &lt;environment: namespace:stats&gt; 
+</code></pre><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">statsNamespaceEnv &lt;- environment(sdFunc) </div><div class="line">sdFunc2 &lt;- get(<span class="string">"sd"</span>, envir = statsNamespaceEnv) </div><div class="line">environment(sdFunc2)</div></pre></td></tr></table></figure>
+<pre><code>## &lt;environment: namespace:stats&gt; 
+</code></pre><p>注意到<code>sd()</code>的环境属性指向<code>namespace:stats</code>。</p>
+<p>这里也有更简单的办法获取一个命名空间的环境。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">statsNamespaceEnv &lt;- asNamespace(<span class="string">"stats"</span>) </div><div class="line">statsNamespaceEnv</div></pre></td></tr></table></figure>
+<pre><code>## &lt;environment: namespace:stats&gt; 
+</code></pre><p>所以，本质上讲，包的环境只是通往命名空间环境的通道而已。<br>包的环境会说“我不知道做啥，问我的函数”。<br>当我们问函数时，他们会说“当你执行我们的时候，你创建了一个新的环境，它的封装环境就是命名空间的环境。”<br>更准确地讲，函数只是贡献出了它们的环境属性。<br>我们也可以让这些虚线变成实线：</p>
+<p><img src="http://7xndoy.com1.z0.glb.clouddn.com/Codage-20-img3-map-of-the-world-complete.png" alt="img3"></p>
+<p>碰巧这是另一种对“为什么对一个对象查询拥有它的环境没有简便方法”的解释。<br>当我们在一个环境中执行语句的时候，我们会关注它所拥有的对象，因为我们可能会用到其中的一个。当我们找到一个函数，我们也应当知道它应该在哪个环境下执行。<br>但在我们的工作流程中，并不是每一个对象我们都应当判定拥有它的环境是什么(并不是那么重要)。</p>
+<p>如果你现在已经晕晕乎乎了，我建议你停下来，重新读一遍这一小节。函数的执行，是整块拼图里最复杂的一个碎片。</p>
+<h2 id="传递函数"><a href="#传递函数" class="headerlink" title="传递函数"></a>传递函数</h2><p>(可选择直接跳过此小节)</p>
+<p>因为函数有一个环境属性，所以它们可以被传递。将一个函数传递给另一个函数，是一个可以让你抓耳挠腮(也很强大)的特征。我们就不在这条道上黑太远了。<br>从一个较高的层面，你可以这样思考：<br>如果一个函数<code>FunctionA(someOtherFunction)</code>以另一个函数<code>someOtherFunction()</code>做参数，那么<code>FunctionA()</code>在它运行的方式上一定跟其它函数有些不同。这种不同被执行<code>someOtherFunction()</code>的过程所控制。我们编写<code>someOtherFunction()</code>的时候就期望它以一种特殊的方式运行。它应该有能力获取其被创建的环境内的所有对象，即使当它被移交给<code>FunctionA()</code>之后，这种能力仍然保留。<br>R虽然为<code>FunctionA()</code>创建了一个新环境，但这并不能妨碍以上功能的实现。<br>当<code>someOtherFunction()</code>最终被运行的时候，R检索此函数的环境属性，并在此环境中执行，而并非在<code>FunctionA()</code>的内部环境中运行。所以之前提到的能力仍能够被支持。<br>事实上，<code>FunctionA()</code>也能将<code>someOtherFunction()</code>传递给<code>FunctionB()</code>，后者也能将其传递给<code>FunctionC()</code>且<code>FunctionC()</code>不与<code>someOtherFunction()</code>的运行结果有直接联系。这是有关函数环境属性的魔法。</p>
+<h2 id="别理那个调用者-caller"><a href="#别理那个调用者-caller" class="headerlink" title="别理那个调用者(caller)"></a>别理那个调用者(caller)</h2><p>我们讨论到的查找机制不会用到调用栈。<br>调用栈是从代码开始运行到你当前所在的计算所涉及到的函数调用的序列。比如，<code>FunctionA()</code>调用<code>FunctionB()</code>，后者调用<code>FunctionC()</code>。那么调用栈就依调用的先后顺序将一个函数置于另一个之上。<br>思考查找机制的问题时，错误的思路就是顺着调用的顺序找。<br>假设<code>FunctionC()</code>会执行<code>FunctionD()</code>。按照调用的思路，如果<code>FunctionD()</code>不是在<code>FunctionC()</code>的执行环境中定义的，那么就需要在<code>FunctionB()</code>的执行环境中查找，然后是<code>FuctionA()</code>。<br>正确的方法应该是问自己“谁拥有<code>FunctionC</code>？”如果拥有者(owner)对<code>FunctionD()</code>一无所知，那么有可能拥有者的拥有者(owner’s owner)知道，以此类推。</p>
+<p>问题是，直觉上我们更倾向按调用栈(调用链)的思路去思考，而不是依照封装环境的链条。<br>需要记住的是，无论R何时估算一行代码，系统总是站在两条重要的环境链的顶端(也可能是底端，顶端易脑补)。一条是封装环境链，它涉及到一个范围问题，比如，如果当前环境的框架下找不到特定的变量名，接下来应该去哪里查找。这是我们关心的链条。另一条是调用栈，它是在一系列的函数调用中产生的。你可以忽略掉这个链条。只有在用到一些特殊的R函数时，才有必要通过这个链条去找一个变量。这些应用场景不在本文的讨论范围内。</p>
+<p><strong>注意</strong>：R(或一些R的读物)在两种链条的文档中都用到“母系”(parent)这个词条。<code>parent.env()</code>函数是我们已经谈过的用来寻找封装环境的函数，而<code>parent.frame()</code>函数用于查询调用栈。这种用词和函数命名肯定会让人疑惑而且也是一个历史的疏忽。“母系”一次不应被用作封装环境的替代品，而只应用在调用栈上。</p>
+<h2 id="终于，R怎么找对象呢？"><a href="#终于，R怎么找对象呢？" class="headerlink" title="终于，R怎么找对象呢？"></a>终于，R怎么找对象呢？</h2><p>R只是顺着那条紫色的公路找呀~<br>要不我们再看一个例子好了。</p>
+<p>假设我们在找<code>ggplot()</code>函数。我们从<code>R_GlobalEnv</code>找起。如果<code>ggplot()</code>不在全局环境中，那它一定在一个包里。所以R遍历查询列表试图找到这个函数。这便是一个直观的封装环境链。最终R在一个包的环境中找到这个函数。尽管<code>ggplot()</code>是在包的环境(package environment)中找到的，R仍然在命名空间的环境(namespace environment)中执行这个函数，一如我们在上一节中讲到的一样。</p>
+<p>如果此时<code>ggplot()</code>调用了另一个函数<code>MyFunction()</code>，则会发生以下事情：</p>
+<ol>
+<li>如果<code>MyFunction()</code>是在<code>ggplot()</code>内定义的，那么我们马上能够找到它，因为R首先在本地环境(local environment)中查找。这里，本地环境是运行<code>ggplot()</code>时创建的环境。</li>
+<li>如果没有找到，那么R会去<code>MyFunction()</code>的执行环境的封装环境(<code>namespace:ggplot2</code>)中查找。如果我们能找到<code>MyFunction()</code>，那么这种情况是同一个包里的一个函数调用另一个函数。</li>
+<li>如果<code>namespace:ggplot2</code>里也找不到<code>MyFunction()</code>，那么R会检查命名空间的环境(namespace environment)的封装环境，也就是导入项的环境(imports environment)。这样<code>ggplot()</code>就有机会在一些明确要求的依赖包里查找<code>MyFunction()</code>函数。可参见我们在第一部分提到过的<code>ggplot2</code>查找<code>plyr</code>中函数的例子。</li>
+<li>如果仍不能找到，那么我们就要去导入项环境的封装环境中查找，也就是<code>namespace:base</code>。你可以在这里找到基础函数(如<code>sd()</code>)，然后结束查找。</li>
+<li>如果<code>namespace:base</code>中也没有<code>MyFunction()</code>，那我们就要回到查询列表了。我们从<code>R_GlobalEnv</code>找起。当然这并不大可能。如果一个包期望用户在全局环境里定义函数，那使用这个包一定是个很差的体验。当然，用户可以以此为机会通过在全局环境里定义自己的<code>MyFunction()</code>函数来打断查找路线。</li>
+<li>如果<code>MyFunction()</code>存在于<code>ggplot2</code>的依赖包中，且这个依赖包存在于帮助文档中<code>Depends</code>项，而不是<code>Imports</code>项，那么我们能在查找列表中找到<code>MyFunction()</code>。此情况类似于前文提到的<code>ggplot()</code>寻找<code>reshape</code>包中的函数的例子。我们也要寄希望于没有其它的包以同样的名字定义了一个函数，这个包被加载的位置也不能太靠近全局环境(<code>reshape2</code>的案例)。</li>
+</ol>
+<p>总之你只需要知道什么是<em>当前</em>或<em>本地</em>环境，然后顺着封装环境链一直查找下去，如此往复。</p>
+<h2 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h2><p><a href="http://blog.obeautifulcode.com/R/How-R-Searches-And-Finds-Stuff/" target="_blank" rel="external">How R Searches and Finds Stuff</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/R/" rel="tag">#R</a>
+          
+            <a href="/tags/译文/" rel="tag">#译文</a>
+          
+            <a href="/tags/environment/" rel="tag">#environment</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/02/Langage-1-francais-grammaire-1/" rel="prev">法语语法拾遗(一)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/23/Codage-19-how-r-searches-and-finds-stuff-1/" rel="next">R如何找对象？ - PART I</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/01/24/Codage-20-how-r-searches-and-finds-stuff-2/"
+                   data-title="R如何找对象？ - PART II" data-url="http://elliott828.github.io/2016/01/24/Codage-20-how-r-searches-and-finds-stuff-2/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar_storm_cat_white.png" alt="Papa Cochon" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Papa Cochon</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">70</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name"></p>
+            
+              <span class="links-of-author-item">
+              <a href="http://monkey0105.github.io/" target="_blank">大师兄</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#紫色虚线"><span class="nav-number">1.</span> <span class="nav-text">紫色虚线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传递函数"><span class="nav-number">2.</span> <span class="nav-text">传递函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#别理那个调用者-caller"><span class="nav-number">3.</span> <span class="nav-text">别理那个调用者(caller)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终于，R怎么找对象呢？"><span class="nav-number">4.</span> <span class="nav-text">终于，R怎么找对象呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原文"><span class="nav-number">5.</span> <span class="nav-text">原文</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Papa Cochon</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="visit-statistics">
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<span id="busuanzi_container_site_pv">
+		<span id="busuanzi_value_site_pv"></span> hits from
+	</span>
+	
+	<span id="busuanzi_container_site_uv">
+		<span id="busuanzi_value_site_uv"></span> visitors 
+	</span>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"papacochon"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

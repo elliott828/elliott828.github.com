@@ -1,0 +1,764 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="google-site-verification" content="-hIKy4njeS0VoSYzKTofmv6kqKt5CyTP4IVIlIWh1N0" />
+<meta name="baidu-site-verification" content="14CLULlEjC" />
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,blog,git,github,Ubuntu,sync," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="现在时不时会在Ubuntu系统中编辑文档，将这个系统中的.md编辑完在发回WIN7系统deploy到hexo是一个很烦的过程，尤其是这事儿以后会经常发生的时候。所以必须寻求一个解决方案，可以在Ubuntu中同样设定一个hexo的文件夹，并通过github同步数据源。
+Hexo文件夹并不需要完全同步，涉及到的修改主要涉及Hexo文件夹下的_config.yml, source文件夹和themes文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="两台设备中同步Hexo博客">
+<meta property="og:url" content="http://elliott828.github.io/2015/10/04/hexo-4-sync-hexo-between-2-devices/index.html">
+<meta property="og:site_name" content="Exity">
+<meta property="og:description" content="现在时不时会在Ubuntu系统中编辑文档，将这个系统中的.md编辑完在发回WIN7系统deploy到hexo是一个很烦的过程，尤其是这事儿以后会经常发生的时候。所以必须寻求一个解决方案，可以在Ubuntu中同样设定一个hexo的文件夹，并通过github同步数据源。
+Hexo文件夹并不需要完全同步，涉及到的修改主要涉及Hexo文件夹下的_config.yml, source文件夹和themes文件">
+<meta property="og:image" content="http://elliott828.github.io/img/source-repo-creation.png">
+<meta property="og:updated_time" content="2015-11-13T07:04:24.090Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="两台设备中同步Hexo博客">
+<meta name="twitter:description" content="现在时不时会在Ubuntu系统中编辑文档，将这个系统中的.md编辑完在发回WIN7系统deploy到hexo是一个很烦的过程，尤其是这事儿以后会经常发生的时候。所以必须寻求一个解决方案，可以在Ubuntu中同样设定一个hexo的文件夹，并通过github同步数据源。
+Hexo文件夹并不需要完全同步，涉及到的修改主要涉及Hexo文件夹下的_config.yml, source文件夹和themes文件">
+<meta name="twitter:image" content="http://elliott828.github.io/img/source-repo-creation.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 两台设备中同步Hexo博客 | Exity </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '68396327-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?00cfd9a9530e4098a08a17043202505a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Exity</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'f-s39SMgF52UH9GHejVp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              两台设备中同步Hexo博客
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-04T19:41:21+08:00" content="2015-10-04">
+            2015-10-04
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Hexo-博客技术/" itemprop="url" rel="index">
+                  <span itemprop="name">Hexo|博客技术</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/04/hexo-4-sync-hexo-between-2-devices/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/04/hexo-4-sync-hexo-between-2-devices/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>现在时不时会在Ubuntu系统中编辑文档，将这个系统中的.md编辑完在发回WIN7系统deploy到hexo是一个很烦的过程，尤其是这事儿以后会经常发生的时候。<br>所以必须寻求一个解决方案，可以在Ubuntu中同样设定一个hexo的文件夹，并通过github同步数据源。</p>
+<p>Hexo文件夹并不需要完全同步，涉及到的修改主要涉及Hexo文件夹下的_config.yml, source文件夹和themes文件夹。_config.yml和themes一旦设定，并不需要经常更新，可以在新设备中的Hexo文件夹设定好了以后用老设备中的文件覆盖上去。而source是更新最频繁的，需要将这个文件夹跟github同步。</p>
+<a id="more"></a>
+<h2 id="同步WIN7中的Hexo-source文件夹至Github"><a href="#同步WIN7中的Hexo-source文件夹至Github" class="headerlink" title="同步WIN7中的Hexo/source文件夹至Github"></a>同步WIN7中的Hexo/source文件夹至Github</h2><p>因为在搭建hexo博客的时候已经设定过一次ssh key，此处不用另外创建。</p>
+<p>登陆Github的个人账户，然后新建一个repository，名字叫<code>source</code>。创建完成后你会看到以下页面：</p>
+<p><img src="/img/source-repo-creation.png" alt="source-repo-creation"></p>
+<p>我的Hexo文件夹放在E盘中，在git bash中输入：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> E:\Hexo\<span class="built_in">source</span></div><div class="line">$ git init</div><div class="line">$ git remote add origin git@github.com:yourusername/source.git</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"initialize hexo folder as a local repo"</span>  <span class="comment"># customize your own message</span></div><div class="line">$ git pull origin master</div><div class="line">$ git push -u origin master</div></pre></td></tr></table></figure></p>
+<p>倒数第二步的<code>git pull origin master</code>，第一次做的时候，如果github的source仓库中中没有任何文件，会返回错误值，可以忽略。</p>
+<p>Github为WINDOWS和OS X系统都提供了<a href="desktop.github.com">Github Desktop</a>，这是一个十分方便的github桌面管理工具，能自动检测github repo和local repo之间的版本差别并提示更新。上面那些步骤也可以通过desktop这样实现：</p>
+<ol>
+<li>备份E:\Hexo\source文件夹，删除原始文件夹</li>
+<li>点击Github Desktop左上角的”+”号并点选”Clone”，从刷新后的目录中选择source这个repo</li>
+<li>继续上一步，选择local path: E:\Hexo。这样你可以在E:\Hexo中看到一个新生成的source文件夹</li>
+<li>将备份中的所有.md文件转移到source文件夹中</li>
+<li>点击Github Desktop右上角齿轮图标下面的”Sync”。这样本地source文件夹中的内容就全部上传到Github了。</li>
+</ol>
+<h2 id="Ubuntu-14-04中Hexo文件夹设定"><a href="#Ubuntu-14-04中Hexo文件夹设定" class="headerlink" title="Ubuntu 14.04中Hexo文件夹设定"></a>Ubuntu 14.04中Hexo文件夹设定</h2><h3 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h3><p>node.js和git是搭建hexo博客的两个基础。<br>在Ubuntu中可以用<a href="https://github.com/creationix/nvm" target="_blank" rel="external">nvm</a>安装node.js。<br>我尝试了各种nvm官方提供的自动安装方法，然而都失败了(RP啊。。。)，于是只好”manually install it”. 安装需要用到管理员权限。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ sudo -i</div><div class="line">$ git <span class="built_in">clone</span> https://github.com/creationix/nvm.git ~/.nvm</div><div class="line">$ . ~/.nvm/nvm.sh</div></pre></td></tr></table></figure></p>
+<p>同样也是官方文档建议，将以上命令的最后一行添加到~/.bashrc, ~/.profile或~/.zshrc三个文件中的任意一个中。<br>安装node.js，可以先查看一下可以安装的版本。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ nvm ls-remote</div></pre></td></tr></table></figure></p>
+<p>最近的版本是v4.1.1<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ nvm install 4.1.1</div></pre></td></tr></table></figure></p>
+<p>检查是否安装成功，可以看现有node的版本。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node --version</div></pre></td></tr></table></figure></p>
+<hr>
+<p><em>编辑于10/5/2015</em></p>
+<p>重启电脑以后输入<code>hexo generate</code>发现hexo命令无法调用，多方查询，说有可能是nodejs的问题<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ nvm ls</div></pre></td></tr></table></figure></p>
+<p>发现node的版本是<code>N/A</code>,说明之前安装的4.1.1并不成功(或许本身这个版本就不能用nvm来安装。。。)<br>那么还是回到稳妥的node版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ nvm install 0.10</div></pre></td></tr></table></figure></p>
+<p>再次查看<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node --version</div></pre></td></tr></table></figure></p>
+<p>返回<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">v0</span><span class="selector-class">.10</span><span class="selector-class">.40</span></div></pre></td></tr></table></figure></p>
+<p>这次才是真的成功了。。。</p>
+<hr>
+<p><em>编辑于11/6/2015</em></p>
+<p>圈子里大牛们讨论上面的问题时，说到了nodejs的发展历史。<br>搜索条目里去年处理这个问题的解决方案之一就是用nvm安装0.10.xx版本的nodejs<br>今年官网上就已经推出5.0的版本了<br>版本演进之快，令人乍舌，不过hexo命令之所以无法使用，极有可能就是因为nodejs在发展过程中将底层调用命令(不是IT，不知道这样表述是否精确)从node变成了nodejs，而hexo仍然使用node去执行命令，并没有考虑nodejs版本上的巨大变化。<br>上面的解决方案是目前比较靠谱的方法。<br>期望有一天这个问题可以解决，让hexo可以使用更高级的nodejs。</p>
+<hr>
+<h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><p>Ubuntu有可能已经安装过git了，如果没有，用下面命令可以安装：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-<span class="keyword">get</span> install git-core</div></pre></td></tr></table></figure></p>
+<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><p>在Terminal中输入：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div><div class="line">$ <span class="built_in">exit</span>     <span class="comment">## exit administrator mode</span></div></pre></td></tr></table></figure></p>
+<p>创建一个Hexo文件夹(这个在之前的博客中也有提到过<a href="papacochon.com/2015/09/03/hexo-1_create-hexo-blog/">搭建Hexo博客</a>)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ <span class="comment">## suppose we are in /home/username/</span></div><div class="line">$ mkdir Hexo</div><div class="line">$ hexo init /home/username/Hexo</div><div class="line">$ <span class="built_in">cd</span> Hexo</div><div class="line">$ npm install</div></pre></td></tr></table></figure></p>
+<p>Hexo文件夹中所有文件生成以后，将WIN7系统中的themes，config.yml和source文件替换进去。</p>
+<h3 id="设置git"><a href="#设置git" class="headerlink" title="设置git"></a>设置git</h3><p>同样要在Ubuntu中新建SSH key并复制到Github中，让Github认证Ubuntu系统的这个电脑。此过程也可以参见原来的文章<a href="http://papacochon.com/2015/09/03/hexo-1_create-hexo-blog/#3-2_新建SSH_key" target="_blank" rel="external">搭建Hexo博客</a>。<br>用git命令行复制source到本地。大同小异。<br>这样基本设置就完成了。<br>我的麻烦点儿，除了这几个基本文件和文件夹的同步以外，还有一些小文件需要从WIN7中拷过来，no zuo no die。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>每次更新要注意先<code>git pull origin master</code>。这样才能保证本地是最新的状态。<br>同样，每次deploy以后，也要记得把source push到Github上，这样才能保证远端Github的repo上是最新的状态。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="http://blog.kavoori.com/2014-10-31/installing-hexo-on-ubuntu.html" target="_blank" rel="external">Installing Hexo on Ubuntu</a></li>
+<li><a href="blog.csdn.net/u012366161/article/details/42059813">Ubuntu下用Hexo搭建个人博客及常见问题的解决方案</a></li>
+<li><a href="http://blog.csdn.net/yuguiyang1990/article/details/39522413" target="_blank" rel="external">使用GitHub + Hexo搭建个人博客（五）- Ubuntu升级后hexo命令失效</a></li>
+</ol>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag">#Hexo</a>
+          
+            <a href="/tags/blog/" rel="tag">#blog</a>
+          
+            <a href="/tags/git/" rel="tag">#git</a>
+          
+            <a href="/tags/github/" rel="tag">#github</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag">#Ubuntu</a>
+          
+            <a href="/tags/sync/" rel="tag">#sync</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/07/Codage-8-ggvis/" rel="prev">R Package ggvis Flashback</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/02/hexo-3-hexo-next-customize/" rel="next">Hexo博客优化 Part II</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/10/04/hexo-4-sync-hexo-between-2-devices/"
+                   data-title="两台设备中同步Hexo博客" data-url="http://elliott828.github.io/2015/10/04/hexo-4-sync-hexo-between-2-devices/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar_storm_cat_white.png" alt="Papa Cochon" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Papa Cochon</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">70</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name"></p>
+            
+              <span class="links-of-author-item">
+              <a href="http://monkey0105.github.io/" target="_blank">大师兄</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#同步WIN7中的Hexo-source文件夹至Github"><span class="nav-number">1.</span> <span class="nav-text">同步WIN7中的Hexo/source文件夹至Github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-14-04中Hexo文件夹设定"><span class="nav-number">2.</span> <span class="nav-text">Ubuntu 14.04中Hexo文件夹设定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装node-js"><span class="nav-number">2.1.</span> <span class="nav-text">安装node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装git"><span class="nav-number">2.2.</span> <span class="nav-text">安装git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装hexo"><span class="nav-number">2.3.</span> <span class="nav-text">安装hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置git"><span class="nav-number">2.4.</span> <span class="nav-text">设置git</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Papa Cochon</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="visit-statistics">
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<span id="busuanzi_container_site_pv">
+		<span id="busuanzi_value_site_pv"></span> hits from
+	</span>
+	
+	<span id="busuanzi_container_site_uv">
+		<span id="busuanzi_value_site_uv"></span> visitors 
+	</span>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"papacochon"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

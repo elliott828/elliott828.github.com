@@ -1,0 +1,837 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="google-site-verification" content="-hIKy4njeS0VoSYzKTofmv6kqKt5CyTP4IVIlIWh1N0" />
+<meta name="baidu-site-verification" content="14CLULlEjC" />
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="VBA,Dictionary," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="上一篇文章VBA Dictionary - Part I提到Dictionary的创建、添加key、添加和修改item、.Items和.Keys的属性以及检查一个key是否存在的.Exists()方法。
+我们还可以对Dictionary做一些别的操作：
+
+复制item
+删除key和item
+
+另外我们需要知道Dictionary返回的结果需要用什么样的方式来呈现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VBA Dictionary - Part II">
+<meta property="og:url" content="http://elliott828.github.io/2015/11/16/Codage-14-vba-dictionary-2/index.html">
+<meta property="og:site_name" content="Exity">
+<meta property="og:description" content="上一篇文章VBA Dictionary - Part I提到Dictionary的创建、添加key、添加和修改item、.Items和.Keys的属性以及检查一个key是否存在的.Exists()方法。
+我们还可以对Dictionary做一些别的操作：
+
+复制item
+删除key和item
+
+另外我们需要知道Dictionary返回的结果需要用什么样的方式来呈现。">
+<meta property="og:updated_time" content="2015-11-17T07:36:52.407Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VBA Dictionary - Part II">
+<meta name="twitter:description" content="上一篇文章VBA Dictionary - Part I提到Dictionary的创建、添加key、添加和修改item、.Items和.Keys的属性以及检查一个key是否存在的.Exists()方法。
+我们还可以对Dictionary做一些别的操作：
+
+复制item
+删除key和item
+
+另外我们需要知道Dictionary返回的结果需要用什么样的方式来呈现。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> VBA Dictionary - Part II | Exity </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '68396327-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?00cfd9a9530e4098a08a17043202505a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Exity</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'f-s39SMgF52UH9GHejVp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              VBA Dictionary - Part II
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-11-16T22:13:02+08:00" content="2015-11-16">
+            2015-11-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Codage-编程/" itemprop="url" rel="index">
+                  <span itemprop="name">Codage|编程</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/11/16/Codage-14-vba-dictionary-2/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/16/Codage-14-vba-dictionary-2/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>上一篇文章<a href="http://papacochon.com/2015/11/11/Codage-13-vba-dictionary-1/" target="_blank" rel="external">VBA Dictionary - Part I</a>提到<code>Dictionary</code>的创建、添加key、添加和修改item、<code>.Items</code>和<code>.Keys</code>的属性以及检查一个key是否存在的<code>.Exists()</code>方法。</p>
+<p>我们还可以对<code>Dictionary</code>做一些别的操作：</p>
+<ul>
+<li>复制item</li>
+<li>删除key和item</li>
+</ul>
+<p>另外我们需要知道<code>Dictionary</code>返回的结果需要用什么样的方式来呈现。</p>
+<a id="more"></a>
+<h2 id="复制item"><a href="#复制item" class="headerlink" title="复制item"></a>复制item</h2><p>当两个key同时对应一个item的时候，我们可以直接将第一个item赋值给第二个。</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">With</span> CreateObject(<span class="string">"scripting.dictionary"</span>)</div><div class="line">    .Add <span class="string">"item1"</span>, <span class="string">"Price1"</span></div><div class="line">    .Item(<span class="string">"item2"</span>) = .Item(<span class="string">"item1"</span>) </div><div class="line"></div><div class="line">    MsgBox .Item(<span class="string">"item1"</span>) = .Item(<span class="string">"item2"</span>)    <span class="comment">'True</span></div><div class="line"><span class="keyword">End</span> <span class="keyword">With</span></div></pre></td></tr></table></figure>
+<h2 id="删除key和对应item"><a href="#删除key和对应item" class="headerlink" title="删除key和对应item"></a>删除key和对应item</h2><p>用<code>.Remove</code>方法删除指定key及对应item。</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">With</span> CreateObject(<span class="string">"scripting.dictionary"</span>)</div><div class="line">    .Add <span class="string">"item1"</span>, <span class="string">"Price1"</span></div><div class="line">    .Item(<span class="string">"item2"</span>) = .Item(<span class="string">"item1"</span>) </div><div class="line"></div><div class="line">    MsgBox <span class="keyword">Join</span>(.Keys, vbNewLine)</div><div class="line"></div><div class="line">    .Remove(<span class="string">"item2"</span>)</div><div class="line">    MsgBox <span class="keyword">Join</span>(.Keys, vbNewLine)</div><div class="line"><span class="keyword">End</span> <span class="keyword">With</span></div></pre></td></tr></table></figure>
+<p>用<code>.RemoveAll</code>删除所有key。</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">With</span> CreateObject(<span class="string">"scripting.dictionary"</span>)</div><div class="line">    .Add <span class="string">"item1"</span>, <span class="string">"Price1"</span></div><div class="line">    .Item(<span class="string">"item2"</span>) = .Item(<span class="string">"item1"</span>) </div><div class="line"></div><div class="line">    MsgBox <span class="keyword">Join</span>(.Keys, vbNewLine)</div><div class="line"></div><div class="line">    .RemoveAll</div><div class="line">    MsgBox .Exists(<span class="string">"item1"</span>)</div><div class="line"><span class="keyword">End</span> <span class="keyword">With</span></div></pre></td></tr></table></figure>
+<h2 id="Dictionary的应用"><a href="#Dictionary的应用" class="headerlink" title="Dictionary的应用"></a><code>Dictionary</code>的应用</h2><p>假设我现有两张表，一张“库存”一张“销售”。</p>
+<p><strong>库存 表例</strong> <code>Range(&quot;A1:D6&quot;)</code></p>
+<table>
+<thead>
+<tr>
+<th>商品编号</th>
+<th>商品名称</th>
+<th>现有库存</th>
+<th>库存状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A2015001</td>
+<td>产品1</td>
+<td>24</td>
+<td>正常  </td>
+</tr>
+<tr>
+<td>A2015002</td>
+<td>产品2</td>
+<td>35</td>
+<td>正常  </td>
+</tr>
+<tr>
+<td>A2015003</td>
+<td>产品3</td>
+<td>19</td>
+<td>正常  </td>
+</tr>
+<tr>
+<td>A2015004</td>
+<td>产品4</td>
+<td>11</td>
+<td>破损  </td>
+</tr>
+<tr>
+<td>A2015005</td>
+<td>产品5</td>
+<td>10</td>
+<td>过期  </td>
+</tr>
+</tbody>
+</table>
+<p><strong>销售 表例</strong> <code>Range(&quot;A11:E16&quot;)</code></p>
+<table>
+<thead>
+<tr>
+<th>商品编号</th>
+<th>商品名称</th>
+<th>日均销量</th>
+<th>产品品牌</th>
+<th>产品分类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A2015001</td>
+<td>产品1</td>
+<td>8</td>
+<td>品牌1</td>
+<td>分类1</td>
+</tr>
+<tr>
+<td>A2015002</td>
+<td>产品2</td>
+<td>13</td>
+<td>品牌2</td>
+<td>分类2</td>
+</tr>
+<tr>
+<td>A2015003</td>
+<td>产品3</td>
+<td>5</td>
+<td>品牌3</td>
+<td>分类3</td>
+</tr>
+<tr>
+<td>A2015004</td>
+<td>产品4</td>
+<td>1</td>
+<td>品牌4</td>
+<td>分类1</td>
+</tr>
+<tr>
+<td>A2015005</td>
+<td>产品5</td>
+<td>2</td>
+<td>品牌5</td>
+<td>分类2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="单列查询"><a href="#单列查询" class="headerlink" title="单列查询"></a>单列查询</h3><p>我想以库存信息为基础，看到每个商品的日均销量。</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Dim</span> sales_id, stock_id, avg_sales, arr</div><div class="line"><span class="keyword">Dim</span> dict</div><div class="line"></div><div class="line"><span class="keyword">set</span> dict = CreateObject(<span class="string">"scripting.dictionary"</span>)</div><div class="line"></div><div class="line">stock_id = Range(<span class="string">"A1:A6"</span>)</div><div class="line">sales_id = Range(<span class="string">"A11:A16"</span>)</div><div class="line">avg_sales = Range(<span class="string">"C11:C16"</span>)</div><div class="line"></div><div class="line"><span class="comment">'将日均销量的值，对应商品id，逐条插入字典</span></div><div class="line"><span class="keyword">For</span> i = <span class="number">2</span> <span class="keyword">to</span> UBound(sales_id)</div><div class="line">    dict(sales_id(i, <span class="number">1</span>)) = avg_sales(i, <span class="number">1</span>)</div><div class="line"><span class="keyword">Next</span></div><div class="line"></div><div class="line"><span class="keyword">Redim</span> arr(<span class="number">2</span> <span class="keyword">To</span> UBound(stock_id), <span class="number">1</span> <span class="keyword">To</span> <span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment">'调用字典，将查询结果存入arr数组</span></div><div class="line"><span class="keyword">For</span> j = <span class="number">2</span> <span class="keyword">to</span> UBound(stock_id)</div><div class="line">    arr(j, <span class="number">1</span>) = dict(stock_id(j, <span class="number">1</span>))</div><div class="line">Nex</div><div class="line"></div><div class="line"><span class="comment">'复制数组至指定位置</span></div><div class="line">Range(<span class="string">"E1"</span>).Value = <span class="string">"日均销量"</span></div><div class="line">Range(<span class="string">"E2"</span>).Resize(UBound(arr) - <span class="number">1</span>, <span class="number">1</span>) = arr</div><div class="line"></div><div class="line"><span class="keyword">set</span> dict = <span class="literal">Nothing</span></div></pre></td></tr></table></figure>
+<h3 id="多列查询"><a href="#多列查询" class="headerlink" title="多列查询"></a>多列查询</h3><p>我想把日均销量、产品品牌及产品分类都放到库存目录后，思路是将上一个版本中插入的item从单一的数值变成一个一维数组，一个数组即包含了单个商品的对应销量信息。</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Dim</span> sales_id, stock_id, sales</div><div class="line"><span class="keyword">Dim</span> dict</div><div class="line"></div><div class="line"><span class="keyword">set</span> dict = CreateObject(<span class="string">"scripting.dictionary"</span>)</div><div class="line"></div><div class="line">stock_id = Range(<span class="string">"A1:A6"</span>)</div><div class="line">sales_id = Range(<span class="string">"A11:A16"</span>)</div><div class="line">sales = Range(<span class="string">"C11:E16"</span>)</div><div class="line"></div><div class="line"><span class="comment">'将三列信息的值，对应商品id，逐条插入字典</span></div><div class="line"><span class="keyword">For</span> i = <span class="number">2</span> <span class="keyword">to</span> UBound(sales_id)</div><div class="line">    dict(sales_id(i, <span class="number">1</span>)) = Application.Index(sales, i, <span class="number">0</span>)</div><div class="line"><span class="keyword">Next</span></div><div class="line"></div><div class="line"><span class="comment">'补足新加列的表头</span></div><div class="line">Range(<span class="string">"C11:E11"</span>).copy Range(<span class="string">"E1"</span>)</div><div class="line"></div><div class="line"><span class="comment">'调用字典，将查询结果直接写入表格</span></div><div class="line"><span class="keyword">For</span> j = <span class="number">2</span> <span class="keyword">to</span> UBound(stock_id)</div><div class="line">    Range(<span class="string">"E"</span> &amp; i &amp; <span class="string">":G"</span> &amp; i) = dict(stock_id(j, <span class="number">1</span>))</div><div class="line"><span class="keyword">Next</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> dict = <span class="literal">Nothing</span></div></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/VBA/" rel="tag">#VBA</a>
+          
+            <a href="/tags/Dictionary/" rel="tag">#Dictionary</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/21/Lecture-7-how-to-read-literature-7/" rel="prev">象征的意涵</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/15/Gastronomie-1-recipes-of-the-princess-1/" rel="next">南瓜馒头</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/11/16/Codage-14-vba-dictionary-2/"
+                   data-title="VBA Dictionary - Part II" data-url="http://elliott828.github.io/2015/11/16/Codage-14-vba-dictionary-2/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar_storm_cat_white.png" alt="Papa Cochon" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Papa Cochon</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">70</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name"></p>
+            
+              <span class="links-of-author-item">
+              <a href="http://monkey0105.github.io/" target="_blank">大师兄</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#复制item"><span class="nav-number">1.</span> <span class="nav-text">复制item</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除key和对应item"><span class="nav-number">2.</span> <span class="nav-text">删除key和对应item</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dictionary的应用"><span class="nav-number">3.</span> <span class="nav-text">Dictionary的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单列查询"><span class="nav-number">3.1.</span> <span class="nav-text">单列查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多列查询"><span class="nav-number">3.2.</span> <span class="nav-text">多列查询</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Papa Cochon</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="visit-statistics">
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<span id="busuanzi_container_site_pv">
+		<span id="busuanzi_value_site_pv"></span> hits from
+	</span>
+	
+	<span id="busuanzi_container_site_uv">
+		<span id="busuanzi_value_site_uv"></span> visitors 
+	</span>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"papacochon"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

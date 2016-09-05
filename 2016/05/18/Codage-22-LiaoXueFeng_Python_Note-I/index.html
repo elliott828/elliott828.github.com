@@ -1,0 +1,863 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="google-site-verification" content="-hIKy4njeS0VoSYzKTofmv6kqKt5CyTP4IVIlIWh1N0" />
+<meta name="baidu-site-verification" content="14CLULlEjC" />
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="Python,廖雪峰," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="针对不熟悉的知识点，按照原教程框架和顺序进行记录。廖兄的教程大致分为三个大的部分：基础对象介绍、python编程方式及后续开发知识点。这一篇是第一部分的知识点拾遗。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="廖雪峰python教程学习笔记">
+<meta property="og:url" content="http://elliott828.github.io/2016/05/18/Codage-22-LiaoXueFeng_Python_Note-I/index.html">
+<meta property="og:site_name" content="Exity">
+<meta property="og:description" content="针对不熟悉的知识点，按照原教程框架和顺序进行记录。廖兄的教程大致分为三个大的部分：基础对象介绍、python编程方式及后续开发知识点。这一篇是第一部分的知识点拾遗。">
+<meta property="og:updated_time" content="2016-05-19T15:53:46.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="廖雪峰python教程学习笔记">
+<meta name="twitter:description" content="针对不熟悉的知识点，按照原教程框架和顺序进行记录。廖兄的教程大致分为三个大的部分：基础对象介绍、python编程方式及后续开发知识点。这一篇是第一部分的知识点拾遗。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 廖雪峰python教程学习笔记 | Exity </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '68396327-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?00cfd9a9530e4098a08a17043202505a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Exity</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'f-s39SMgF52UH9GHejVp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              廖雪峰python教程学习笔记
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-05-18T16:00:28+08:00" content="2016-05-18">
+            2016-05-18
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Codage-编程/" itemprop="url" rel="index">
+                  <span itemprop="name">Codage|编程</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/05/18/Codage-22-LiaoXueFeng_Python_Note-I/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/18/Codage-22-LiaoXueFeng_Python_Note-I/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>针对不熟悉的知识点，按照原教程框架和顺序进行记录。<br>廖兄的教程大致分为三个大的部分：基础对象介绍、python编程方式及后续开发知识点。<br>这一篇是第一部分的知识点拾遗。<br><a id="more"></a></p>
+<h2 id="基本数据类型相关"><a href="#基本数据类型相关" class="headerlink" title="基本数据类型相关"></a>基本数据类型相关</h2><h3 id="tuple的不可修改性"><a href="#tuple的不可修改性" class="headerlink" title="tuple的不可修改性"></a>tuple的不可修改性</h3><p>list可修改而tuple不可修改(tuple也是一种list)。tuple不可修改针对的是内存的指向，如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">L = (<span class="string">"a"</span>, <span class="string">"b"</span>, [<span class="string">"c"</span>, <span class="string">"d"</span>])</div></pre></td></tr></table></figure></p>
+<p>第一个元素和第二个元素均不能修改，因为tuple的前两个元素直接指向了内存中的”a”和”b”。第三个元素是[“c”, “d”]这个list，不可修改仅针对他最基础的那层属性，即list，不可修改为其它属性的对象，而list内的元素是可以变更的。</p>
+<h3 id="判断一个key在dict中是否存在"><a href="#判断一个key在dict中是否存在" class="headerlink" title="判断一个key在dict中是否存在"></a>判断一个key在dict中是否存在</h3><p>方法1：<code>in</code>: 如<code>&#39;a&#39; in dict</code>, 如不存在，返回<code>False</code><br>方法2: <code>.get()</code>: 如<code>dict.get(&#39;a&#39;)</code>，如不存在返回<code>None</code>。可指定返回值：<code>dict.get(&#39;a&#39;, -1)</code>，如不存在，则返回-1</p>
+<h2 id="函数相关"><a href="#函数相关" class="headerlink" title="函数相关"></a>函数相关</h2><h3 id="空函数"><a href="#空函数" class="headerlink" title="空函数"></a>空函数</h3><p><code>pass</code>语句什么都不做，那有什么用？实际上<code>pass</code>可以用来作为占位符，比如现在还没想好怎么写函数的代码，就可以先放一个<code>pass</code>，让代码能运行起来。</p>
+<h3 id="函数返回多个值"><a href="#函数返回多个值" class="headerlink" title="函数返回多个值"></a>函数返回多个值</h3><p>如果函数内部定义了同时返回多个值，比如函数<code>test(lambda)</code>返回<code>x</code>, <code>y</code>, <code>z</code>，运行后分别在函数内部赋值为1, 2, 3。我们将结果保存：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a, b, c = test(<span class="keyword">lambda</span>)</div><div class="line">print(a, b, c)</div></pre></td></tr></table></figure></p>
+<p>可以得到返回值为<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></div></pre></td></tr></table></figure></p>
+<p>如果将函数仅赋值为一个变量：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">p = test(<span class="keyword">lambda</span>)</div><div class="line">print(p)</div></pre></td></tr></table></figure></p>
+<p>那么我们可以得到如下结果：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div></pre></td></tr></table></figure></p>
+<p>返回值是一个tuple。</p>
+<blockquote>
+<p>在语法上，返回一个tuple可以省略括号，而多个变量可以同时接收一个tuple，按位置赋给对应的值。所以，Python的函数返回多值其实就是返回一个tuple，但写起来更方便。</p>
+</blockquote>
+<h3 id="可变-长度-参数"><a href="#可变-长度-参数" class="headerlink" title="可变(长度)参数"></a>可变(长度)参数</h3><p>当函数可处理的参数个数不确定时，如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc</span><span class="params">(numbers)</span>:</span></div><div class="line">    sum = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> numbers:</div><div class="line">        sum = sum + n * n</div><div class="line">    <span class="keyword">return</span> sum</div></pre></td></tr></table></figure></p>
+<p>调用这个函数时，如果要计算多个值相加的结果，需要将这些值塞进一个list或者一个tuple，而不能直接写成<code>calc(1, 2, 3)</code>。想要实现后一种调用方式，则需要在参数前添加符号：<code>*</code>。如下:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc</span><span class="params">(*numbers)</span>:</span></div><div class="line">    sum = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> numbers:</div><div class="line">        sum = sum + n * n</div><div class="line">    <span class="keyword">return</span> sum</div></pre></td></tr></table></figure></p>
+<p>在函数内部，<code>*</code>的作用是让参数<code>numbers</code>接收到的是一个tuple，这样，调用这个函数时，可以传入任意数量(理论上来说，0到正无穷)的参数。比如有了一个list:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</div></pre></td></tr></table></figure></p>
+<p>我们并不用这样调用：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">calc(nums[<span class="number">0</span>], nums[<span class="number">1</span>], nums[<span class="number">2</span>])</div></pre></td></tr></table></figure></p>
+<p>而是可以直接在<code>nums</code>前添加<code>*</code>号，再传入函数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">calc(*nums)</div></pre></td></tr></table></figure></p>
+<h3 id="关键字参数"><a href="#关键字参数" class="headerlink" title="关键字参数"></a>关键字参数</h3><p><code>**</code>加参数名即为关键字参数，允许传入0个或任意个含参数名的参数，并在函数内部自动组成dict。<br>上面提到的可变参数——在函数内部自动组成tuple，在函数调用时，可以直接使用list和tuple。关键字参数的使用方法也一样，函数调用时，也可以以dict的形式设定参数。</p>
+<p>函数示例：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">person</span><span class="params">(name, age, **kw)</span>:</span></div><div class="line">    print(<span class="string">'name:'</span>, name, <span class="string">'age:'</span>, age, <span class="string">'other:'</span>, kw)</div></pre></td></tr></table></figure></p>
+<p>可以这样调用：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">person(<span class="string">'Adam'</span>, <span class="number">45</span>, city=<span class="string">'Beijing'</span>, job=<span class="string">'Engineer'</span>)</div></pre></td></tr></table></figure></p>
+<p>和可变参数类似，也可以先组装出一个dict，然后，把该dict转换为关键字参数传进去：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">extra = &#123;<span class="string">'city'</span>: <span class="string">'Beijing'</span>, <span class="string">'job'</span>: <span class="string">'Engineer'</span>&#125;</div><div class="line">person(<span class="string">'Jack'</span>, <span class="number">24</span>, city=extra[<span class="string">'city'</span>], job=extra[<span class="string">'job'</span>])</div></pre></td></tr></table></figure>
+<p>当然，上面复杂的调用可以用简化的写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">extra = &#123;<span class="string">'city'</span>: <span class="string">'Beijing'</span>, <span class="string">'job'</span>: <span class="string">'Engineer'</span>&#125;</div><div class="line">person(<span class="string">'Jack'</span>, <span class="number">24</span>, **extra)</div></pre></td></tr></table></figure>
+<blockquote>
+<p><code>**extra</code>表示把extra这个dict的所有key-value用关键字参数传入到函数的<code>**kw</code>参数，kw将获得一个dict，注意<code>kw</code>获得的dict是<code>extra</code>的一份拷贝，对kw的改动不会影响到函数外的<code>extra</code></p>
+</blockquote>
+<h3 id="命名关键字参数"><a href="#命名关键字参数" class="headerlink" title="命名关键字参数"></a>命名关键字参数</h3><p>可变参数和关键字参数的好处是参数的传入不受限制，但如果想控制，比如关键字参数传入了哪些，就必须在函数内部进行检查。<br>如果想限制关键字参数的名字而省掉关键字的检查步骤，则应考虑使用<strong>命名关键字参数</strong>。比如，只接受<code>city</code>和<code>job</code>做为关键字参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">person</span><span class="params">(name, age, *, city, job)</span>:</span></div><div class="line">    print(name, age, city, job)</div></pre></td></tr></table></figure>
+<p>命名关键字参数需要一个特殊分隔符<code>*</code>，<code>*</code>后面的参数被视为命名关键字参数。如果函数定义中已经有了一个可变参数，则后面不再需要一个特殊分隔符<code>*</code>。</p>
+<blockquote>
+<p>使用命名关键字参数时，要特别注意，如果没有可变参数，就必须加一个<em>作为特殊分隔符。如果缺少</em>，Python解释器将无法识别位置参数和命名关键字参数</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">person</span><span class="params">(name, age, *, city, job)</span>:</span></div><div class="line">    print(name, age, city, job)</div><div class="line"></div><div class="line"><span class="comment"># or</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">person</span><span class="params">(name, age, *args, city, job)</span>:</span></div><div class="line">    print(name, age, args, city, job)</div></pre></td></tr></table></figure>
+<p>要注意的是命名关键字参数必须传入参数名，如果没有传入参数名，python视所有参数为位置参数，进而报错。而上面定义的<code>person()</code>只有两个位置参数。</p>
+<blockquote>
+<p>在Python中定义函数，可以用必选参数、默认参数、可变参数、关键字参数和命名关键字参数，这5种参数都可以组合使用。但是请注意，<code>**</code>参数定义的顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数<code>**</code>。</p>
+</blockquote>
+<h3 id="递归函数的尾递归优化"><a href="#递归函数的尾递归优化" class="headerlink" title="递归函数的尾递归优化"></a>递归函数的尾递归优化</h3><p>先贴一句让我撞墙的话：</p>
+<blockquote>
+<p>在计算机中，函数调用是通过栈（stack）这种数据结构实现的，每当进入一个函数调用，栈就会加一层栈帧，每当函数返回，栈就会减一层栈帧。由于栈的大小不是无限的，所以，递归调用的次数过多，会导致栈溢出。</p>
+</blockquote>
+<p>举的例子是阶乘函数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">if</span> n==<span class="number">1</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> n * fact(n - <span class="number">1</span>)</div><div class="line"></div><div class="line">print(fact(<span class="number">1</span>))</div></pre></td></tr></table></figure></p>
+<pre><code>## 1
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(fact(<span class="number">5</span>))</div></pre></td></tr></table></figure>
+<pre><code>## 120
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(fact(<span class="number">10</span>))</div></pre></td></tr></table></figure>
+<pre><code>## 3628800
+</code></pre><p>然而当我们尝试<code>fact(1000)</code>的时候，函数会报错。于是有了这一小节开头的那一句话。解决方案是使用<strong>尾递归优化</strong>。</p>
+<blockquote>
+<p>尾递归是指，在函数返回的时候，调用自身本身，并且，<code>return</code>语句不能包含表达式。这样，编译器或者解释器就可以把尾递归做优化，使递归本身无论调用多少次，都只占用一个栈帧，不会出现栈溢出的情况。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">return</span> fact_iter(n, <span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact_iter</span><span class="params">(num, product)</span>:</span></div><div class="line">    <span class="keyword">if</span> num == <span class="number">1</span>:</div><div class="line">        <span class="keyword">return</span> product</div><div class="line">    <span class="keyword">return</span> fact_iter(num - <span class="number">1</span>, num * product)</div></pre></td></tr></table></figure>
+<p>两种递归的计算步骤对比是：<br>递归：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">===&gt; fact(<span class="number">5</span>)</div><div class="line">===&gt; <span class="number">5</span> * fact(<span class="number">4</span>)</div><div class="line">===&gt; <span class="number">5</span> * (<span class="number">4</span> * fact(<span class="number">3</span>))</div><div class="line">===&gt; <span class="number">5</span> * (<span class="number">4</span> * (<span class="number">3</span> * fact(<span class="number">2</span>)))</div><div class="line">===&gt; <span class="number">5</span> * (<span class="number">4</span> * (<span class="number">3</span> * (<span class="number">2</span> * fact(<span class="number">1</span>))))</div><div class="line">===&gt; <span class="number">5</span> * (<span class="number">4</span> * (<span class="number">3</span> * (<span class="number">2</span> * <span class="number">1</span>)))</div><div class="line">===&gt; <span class="number">5</span> * (<span class="number">4</span> * (<span class="number">3</span> * <span class="number">2</span>))</div><div class="line">===&gt; <span class="number">5</span> * (<span class="number">4</span> * <span class="number">6</span>)</div><div class="line">===&gt; <span class="number">5</span> * <span class="number">24</span></div><div class="line">===&gt; <span class="number">120</span></div></pre></td></tr></table></figure></p>
+<p>尾递归优化：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">===&gt; fact_iter(<span class="number">5</span>, <span class="number">1</span>)</div><div class="line">===&gt; fact_iter(<span class="number">4</span>, <span class="number">5</span>)</div><div class="line">===&gt; fact_iter(<span class="number">3</span>, <span class="number">20</span>)</div><div class="line">===&gt; fact_iter(<span class="number">2</span>, <span class="number">60</span>)</div><div class="line">===&gt; fact_iter(<span class="number">1</span>, <span class="number">120</span>)</div><div class="line">===&gt; <span class="number">120</span></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>尾递归调用时，如果做了优化，栈不会增长，因此，无论多少次调用也不会导致栈溢出。<br>遗憾的是，大多数编程语言没有针对尾递归做优化，Python解释器也没有做优化，所以，即使把上面的fact(n)函数改成尾递归方式，也会导致栈溢出。</p>
+</blockquote>
+<h2 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h2><h3 id="切片-Slicing"><a href="#切片-Slicing" class="headerlink" title="切片(Slicing)"></a>切片(Slicing)</h3><p>在一个可提取子集的对象后用<code>[:]</code>切片。<br>如果加入第二个<code>:</code>如<code>[::]</code>，则第二个<code>:</code>表示切片的步长。<br>如:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">L = list(range(<span class="number">100</span>))</div><div class="line">L[:<span class="number">10</span>:<span class="number">2</span>]</div></pre></td></tr></table></figure></p>
+<pre><code>## [0, 2, 4, 6, 8]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">L[::<span class="number">5</span>]</div></pre></td></tr></table></figure>
+<pre><code>## [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95]
+</code></pre><h3 id="迭代-Iteration"><a href="#迭代-Iteration" class="headerlink" title="迭代(Iteration)"></a>迭代(Iteration)</h3><p>判断一个对象是否可以迭代：通过collections模块中的Iterable：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Iterable</div><div class="line">isinstance(<span class="string">'abc'</span>, Iterable)    <span class="comment"># True</span></div><div class="line">isinstance([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], Iterable)  <span class="comment"># True</span></div><div class="line">isinstance(<span class="number">123</span>, Iterable)      <span class="comment"># False</span></div></pre></td></tr></table></figure></p>
+<p>enumerate可以吧一个list变成<em>索引-元素对</em>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> i, value <span class="keyword">in</span> enumerate([<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>]):</div><div class="line">    print(i, value)</div></pre></td></tr></table></figure></p>
+<pre><code>## 0 A
+## 1 B
+## 2 C
+</code></pre><h3 id="列表生成器-List-Comprehensions"><a href="#列表生成器-List-Comprehensions" class="headerlink" title="列表生成器(List Comprehensions)"></a>列表生成器(List Comprehensions)</h3><p>用于简化列表生成的python内置功能。<br>生成一个<code>[1, 4, 9, ..., 100]</code>的llist，常规方法是循环生成：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>):</div><div class="line">    L.append(x * x)</div></pre></td></tr></table></figure></p>
+<p>列表生成式提供了一种用一行既可以替代循环生成list的方式：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[x * x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>)]</div></pre></td></tr></table></figure></p>
+<p>这种生成方式可以与SQL语句对比(假设<code>range(1,11)</code>在数据库中为表<code>temp</code>，该表只有一个field：x)：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> x * x <span class="keyword">FROM</span> temp</div></pre></td></tr></table></figure></p>
+<p><code>for</code>循环后面可以加上<code>if</code>判断，筛选出偶数的平方：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[x * x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]</div></pre></td></tr></table></figure></p>
+<p>对比SQL：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> x * x <span class="keyword">FROM</span> temp <span class="keyword">WHERE</span> x % <span class="number">2</span> = <span class="number">0</span></div></pre></td></tr></table></figure></p>
+<p>列表生成器也可以使用多层循环(一般最多两层)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[m + n <span class="keyword">for</span> m <span class="keyword">in</span> <span class="string">'ABC'</span> <span class="keyword">for</span> n <span class="keyword">in</span> <span class="string">'XYZ'</span>]</div></pre></td></tr></table></figure></p>
+<h3 id="生成器-Generator"><a href="#生成器-Generator" class="headerlink" title="生成器(Generator)"></a>生成器(Generator)</h3><p>列表生成器的局限是无法生成一个过长的list，因为太长的list会占用太大的内存以至于无法实现这类list的创建。如果只需要对这种列表的前几个元素进行计算，那么后面的元素所占用的空间就被浪费了<br>生成器与列表生成器的区别就在于，每一个元素可以在循环中创建，而不用创建完整的list。元素的创建都依靠算法，一次只占用一个单位的内存空间。<br>生成器最直接的创建方式是讲列表生成式的<code>[]</code>替换为<code>()</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">L = [x * x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>)]</div><div class="line">L</div></pre></td></tr></table></figure></p>
+<pre><code>## [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">g = (x * x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>))</div><div class="line">g</div></pre></td></tr></table></figure>
+<pre><code>## &lt;generator object &lt;genexpr&gt; at 0x1022ef630&gt;
+</code></pre><p>想要看到<code>g</code>(刚刚创建的生成器)的内容，有两种方式，可以通过<code>next(g)</code>来查看下一个返回值，直到返回<code>StopIteration</code>的错误信息。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure></p>
+<pre><code>## 0
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure>
+<pre><code>## 1
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure>
+<pre><code>## 4
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure>
+<pre><code>## 9
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure>
+<pre><code>## 16
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure>
+<pre><code>## 25
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure>
+<pre><code>## 36
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure>
+<pre><code>## 49
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure>
+<pre><code>## 64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure>
+<pre><code>## 81
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(g)</div></pre></td></tr></table></figure>
+<pre><code>## Traceback (most recent call last):
+##     File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+## StopIteration
+</code></pre><p>或者使用<code>for</code>循环：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> n <span class="keyword">in</span> g:</div><div class="line">    print(n)</div></pre></td></tr></table></figure>
+<pre><code>## 0
+## 1
+## 4
+## 9
+## 16
+## 25
+## 36
+## 49
+## 64
+## 81
+</code></pre><p>回到generator的创建上，另一种方法是在函数中使用<code>yield</code>。以一个能生成斐波那契数列的函数为例：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib1</span><span class="params">(max)</span>:</span></div><div class="line">    n, a, b = <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span></div><div class="line">    <span class="keyword">while</span> n &lt; max:</div><div class="line">        print(b)</div><div class="line">        a, b = b, a + b</div><div class="line">        n = n + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'done'</span></div></pre></td></tr></table></figure></p>
+<p>而generator只需要更改其中的一个语句：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib2</span><span class="params">(max)</span>:</span></div><div class="line">    n, a, b = <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span></div><div class="line">    <span class="keyword">while</span> n &lt; max:</div><div class="line">        <span class="keyword">yield</span> b</div><div class="line">        a, b = b, a + b</div><div class="line">        n = n + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'done'</span></div></pre></td></tr></table></figure></p>
+<p>来看看效果：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fib1(<span class="number">6</span>)</div></pre></td></tr></table></figure></p>
+<pre><code>## 1
+## 1
+## 2
+## 3
+## 5
+## 8
+## &apos;done&apos;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">f = fib(<span class="number">6</span>)</div><div class="line">f</div></pre></td></tr></table></figure>
+<pre><code>## &lt;generator object fib at 0x104feaaa0&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(f)</div></pre></td></tr></table></figure>
+<pre><code>## 1
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(f)</div></pre></td></tr></table></figure>
+<pre><code>## 1
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(f)</div></pre></td></tr></table></figure>
+<pre><code>## 2
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">next(f)</div></pre></td></tr></table></figure>
+<pre><code>## 3
+</code></pre><p>两个例子对比可以看出：</p>
+<ul>
+<li>函数里<code>return</code>是一个触发器，遇到<code>return</code>的时候，程序返回结果</li>
+<li>生成器里，<code>yield</code>是一个触发器。每次调用next()就执行一次生成器，遇到<code>yield</code>就返回结果，再次执行时，从上次返回的<code>yield</code>的地方继续执行</li>
+</ul>
+<p>当然用<code>next()</code>来获取返回值比较不效率，一般可以直接使用<code>for</code>循环来迭代：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> n <span class="keyword">in</span> f:</div><div class="line">    print(n)</div></pre></td></tr></table></figure>
+<pre><code>## 1
+## 1
+## 2
+## 3
+## 5
+## 8
+</code></pre><h3 id="迭代器-Iterator"><a href="#迭代器-Iterator" class="headerlink" title="迭代器(Iterator)"></a>迭代器(Iterator)</h3><blockquote>
+<p>可以被next()函数调用并不断返回下一个值的对象称为迭代器：<code>Iterator</code>。<br>可以使用<code>isinstance()</code>判断一个对象是否是<code>Iterator</code>对象</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Iterator</div><div class="line">isinstance((x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>)), Iterator)  <span class="comment"># True</span></div><div class="line">isinstance([], Iterator)                      <span class="comment"># False</span></div><div class="line">isinstance(&#123;&#125;, Iterator)                      <span class="comment"># False</span></div><div class="line">isinstance(<span class="string">'abc'</span>, Iterator)                   <span class="comment"># False</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>为什么list、dict、str等数据类型不是Iterator？<br>这是因为Python的Iterator对象表示的是一个数据流，Iterator对象可以被next()函数调用并不断返回下一个数据，直到没有数据时抛出StopIteration错误。可以把这个数据流看做是一个有序序列，但我们却不能提前知道序列的长度，只能不断通过next()函数实现按需计算下一个数据，所以Iterator的计算是惰性的，只有在需要返回下一个数据时它才会计算。<br>Iterator甚至可以表示一个无限大的数据流，例如全体自然数。而使用list是永远不可能存储全体自然数的。</p>
+</blockquote>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+            <a href="/tags/廖雪峰/" rel="tag">#廖雪峰</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/02/LaVie-11-precise-strike/" rel="prev">精确打击</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/14/Peinture-1-maozongzhong/" rel="next">云下的灵魂</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/05/18/Codage-22-LiaoXueFeng_Python_Note-I/"
+                   data-title="廖雪峰python教程学习笔记" data-url="http://elliott828.github.io/2016/05/18/Codage-22-LiaoXueFeng_Python_Note-I/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar_storm_cat_white.png" alt="Papa Cochon" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Papa Cochon</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">70</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name"></p>
+            
+              <span class="links-of-author-item">
+              <a href="http://monkey0105.github.io/" target="_blank">大师兄</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据类型相关"><span class="nav-number">1.</span> <span class="nav-text">基本数据类型相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tuple的不可修改性"><span class="nav-number">1.1.</span> <span class="nav-text">tuple的不可修改性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断一个key在dict中是否存在"><span class="nav-number">1.2.</span> <span class="nav-text">判断一个key在dict中是否存在</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数相关"><span class="nav-number">2.</span> <span class="nav-text">函数相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空函数"><span class="nav-number">2.1.</span> <span class="nav-text">空函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数返回多个值"><span class="nav-number">2.2.</span> <span class="nav-text">函数返回多个值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可变-长度-参数"><span class="nav-number">2.3.</span> <span class="nav-text">可变(长度)参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键字参数"><span class="nav-number">2.4.</span> <span class="nav-text">关键字参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命名关键字参数"><span class="nav-number">2.5.</span> <span class="nav-text">命名关键字参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#递归函数的尾递归优化"><span class="nav-number">2.6.</span> <span class="nav-text">递归函数的尾递归优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级特性"><span class="nav-number">3.</span> <span class="nav-text">高级特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#切片-Slicing"><span class="nav-number">3.1.</span> <span class="nav-text">切片(Slicing)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代-Iteration"><span class="nav-number">3.2.</span> <span class="nav-text">迭代(Iteration)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表生成器-List-Comprehensions"><span class="nav-number">3.3.</span> <span class="nav-text">列表生成器(List Comprehensions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成器-Generator"><span class="nav-number">3.4.</span> <span class="nav-text">生成器(Generator)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器-Iterator"><span class="nav-number">3.5.</span> <span class="nav-text">迭代器(Iterator)</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Papa Cochon</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="visit-statistics">
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<span id="busuanzi_container_site_pv">
+		<span id="busuanzi_value_site_pv"></span> hits from
+	</span>
+	
+	<span id="busuanzi_container_site_uv">
+		<span id="busuanzi_value_site_uv"></span> visitors 
+	</span>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"papacochon"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

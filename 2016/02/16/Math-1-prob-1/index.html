@@ -1,0 +1,824 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="google-site-verification" content="-hIKy4njeS0VoSYzKTofmv6kqKt5CyTP4IVIlIWh1N0" />
+<meta name="baidu-site-verification" content="14CLULlEjC" />
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="数学,概率,MIT," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="重构几个有趣的初级概率题，先从小明的冷笑话讲起。
+一天老师在班里举行讲笑话大赛，轮到小明了。小明：“不笑是傻蛋。”全班停了一秒，全都笑了。老师：“哈哈，滚出去，哈哈。。”
+于是小明一滚就不知道滚到哪里去了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="书呆子的概率题">
+<meta property="og:url" content="http://elliott828.github.io/2016/02/16/Math-1-prob-1/index.html">
+<meta property="og:site_name" content="Exity">
+<meta property="og:description" content="重构几个有趣的初级概率题，先从小明的冷笑话讲起。
+一天老师在班里举行讲笑话大赛，轮到小明了。小明：“不笑是傻蛋。”全班停了一秒，全都笑了。老师：“哈哈，滚出去，哈哈。。”
+于是小明一滚就不知道滚到哪里去了。">
+<meta property="og:image" content="http://7xndoy.com1.z0.glb.clouddn.com/Math1-pic1.jpg">
+<meta property="og:image" content="http://7xndoy.com1.z0.glb.clouddn.com/Math1-pic2.png">
+<meta property="og:updated_time" content="2016-02-21T16:36:28.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="书呆子的概率题">
+<meta name="twitter:description" content="重构几个有趣的初级概率题，先从小明的冷笑话讲起。
+一天老师在班里举行讲笑话大赛，轮到小明了。小明：“不笑是傻蛋。”全班停了一秒，全都笑了。老师：“哈哈，滚出去，哈哈。。”
+于是小明一滚就不知道滚到哪里去了。">
+<meta name="twitter:image" content="http://7xndoy.com1.z0.glb.clouddn.com/Math1-pic1.jpg">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 书呆子的概率题 | Exity </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '68396327-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?00cfd9a9530e4098a08a17043202505a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Exity</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'f-s39SMgF52UH9GHejVp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              书呆子的概率题
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-02-16T21:34:43+08:00" content="2016-02-16">
+            2016-02-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Mathematiques-数字游戏/" itemprop="url" rel="index">
+                  <span itemprop="name">Mathématiques|数字游戏</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/02/16/Math-1-prob-1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/16/Math-1-prob-1/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>重构几个有趣的初级概率题，先从小明的冷笑话讲起。</p>
+<p>一天老师在班里举行讲笑话大赛，轮到小明了。<br>小明：“不笑是傻蛋。”<br>全班停了一秒，全都笑了。<br>老师：“哈哈，滚出去，哈哈。。”</p>
+<p>于是小明一滚就不知道滚到哪里去了。</p>
+<a id="more"></a>
+<h2 id="故事一-小明打乒乓"><a href="#故事一-小明打乒乓" class="headerlink" title="故事一 小明打乒乓"></a>故事一 小明打乒乓</h2><p>小明滚到体育馆去打乒乓。乒乓馆正在打擂台赛，卫冕冠军小强正在等待新人挑战。<br>小明和旺财一路打到决赛。<br>要挑战卫冕冠军，小明和旺财首先要打一轮两场比赛。如果其中任意一个赢了两场，便可以打第二轮挑战小强。如果小强能够赢下第二轮中的任意一场，则保留冠军头衔，否则新冠军便是小明或者旺财。(也就是说，如果小强拿下第二轮的第一场，第二场就不用再进行。)</p>
+<p>另外还有一些条件，通过比赛记录，计算机给出了三组对抗胜算的概率：</p>
+<ol>
+<li>小明胜旺财: $0.6$</li>
+<li>小强胜小明: $0.5$</li>
+<li>小强胜旺财: $0.7$</li>
+</ol>
+<p>每场比赛之间没有任何关联性，我们想知道：</p>
+<ol>
+<li>小强卫冕的概率</li>
+<li>如果第二轮比赛确实发生了：<br> 2.1 小明夺冠的概率<br> 2.2 小强卫冕的概率</li>
+<li>如果第二轮确实发生了，但只进行了一场，那么小明在第一轮胜出的条件概率是多少？</li>
+</ol>
+<h2 id="故事二-小明碰运气"><a href="#故事二-小明碰运气" class="headerlink" title="故事二 小明碰运气"></a>故事二 小明碰运气</h2><p>滚出学校的路上，小明碰到一个路边游戏摊，游戏摊给了一个像电路板一样的房间，房间里每道门都有一个概率$p$可以打开，交10块钱就可以进去碰运气，如果能从A走到B，那么可以赢100块钱。</p>
+<p><img src="http://7xndoy.com1.z0.glb.clouddn.com/Math1-pic1.jpg" alt="math1"></p>
+<p>小明最终拿到100块钱的概率是多少？</p>
+<h2 id="故事三-小明寻情记"><a href="#故事三-小明寻情记" class="headerlink" title="故事三 小明寻情记"></a>故事三 小明寻情记</h2><p>小明有女友在A城，有梦中情人在B城，老师上周没收他手机的时候发现了他丰富的感情生活。据聊天内容推测，小明离家出走到A城的几率是$0.4$，小明去B城的几率是$0.6$。(不要问我为什么。)</p>
+<p>老师一想不行啊，走丢了我的年终奖就没了啊，那我得找啊，她掐指一算：</p>
+<ol>
+<li>如果小明去会女朋友了，她找到他的概率是$0.25$;</li>
+<li>如果小明去追求梦中情人了，她找到他的概率是$0.15$;</li>
+<li>小明不大可能从A城流窜到B城，反之也不大可能;</li>
+<li>老师只有白天找小明，要去另一座城就要熬夜过去;</li>
+<li>小明出走前就有私奔倾向，如果老师当天找到则小明不会拒绝跟她回学校；第二天找到则跟她回学校的几率变成$2/3$。依次类推，如果老师在第n天找到小明，则小明跟她回去的几率为$2/(n+1)$。</li>
+</ol>
+<p>那么问题来了：</p>
+<ol>
+<li>如果老师先从A城找起，且第一天没有找到小明，那小明仍然在A城的概率是多少？</li>
+<li>老师左右手互搏(左右手实力相当)，左手赢了先去A城，反之去B城，最终她第一天就找到了小明且带回学校记大过处分。老师先在A城搜索的概率是多少？</li>
+<li>老师决定先去A城找两天小明。<br> 3.1 她在第二天找到小明并成功带回家的概率是多少？<br> 3.2 已知老师第一天没有找到小明，那她第二天没能将小明带回学校的概率是多少？</li>
+<li>老师先在A城找了三天然后第四天在B城找，最终精疲力竭地在第四天找到了小明。她最终能把小明带回学校的概率是多少？</li>
+</ol>
+<hr>
+<h2 id="小明来一本正经地揭晓答案"><a href="#小明来一本正经地揭晓答案" class="headerlink" title="小明来一本正经地揭晓答案"></a>小明来一本正经地揭晓答案</h2><h3 id="结局一-小明打乒乓"><a href="#结局一-小明打乒乓" class="headerlink" title="结局一 小明打乒乓"></a>结局一 小明打乒乓</h3><p>先列几个事件$A$, $B$, $C$：</p>
+<blockquote>
+<ul>
+<li>小明胜旺财: $P(A) = 0.6$</li>
+<li>小明胜小强: $P(B) = 1 - 0.5 = 0.5$</li>
+<li>旺财胜小强: $P(C) = 1- 0.7 = 0.3$</li>
+</ul>
+</blockquote>
+<p>另有事件：</p>
+<blockquote>
+<ul>
+<li>$D$: 小强卫冕</li>
+<li>$R2$: 第二轮竞赛发生</li>
+<li>$M$: 小明夺冠</li>
+<li>$W$: 旺财夺冠</li>
+</ul>
+</blockquote>
+<p>那么事件的发展可以绘制成一棵树：<br><img src="http://7xndoy.com1.z0.glb.clouddn.com/Math1-pic2.png" alt="tree1"></p>
+<ol>
+<li><p>小强卫冕的概率</p>
+<blockquote>
+<p>每场比赛都是独立事件，所以我们只需要将树中所有灰色部分的相关路径的概率乘积加和：</p>
+<p>$<br>\begin{aligned}<br>P(D)&amp; = P(A) \times P(A^c)+P(A)^2 \times P(B^c)+P(A)^2 \times P(B) \times P(B^c) \\<br>&amp;+ P(A^c) \times P(A)+P(A^c)^2 \times P(C^c)+P(A^c)^2 \times P(C) \times P(C^c) \\<br>&amp;=.6 \times .4+.6^2 \times .5+.6^2\times.5 \times .5+.4 \times .6+.4^2 \times .7+.4^2 \times .3 \times .7 \\<br>&amp;=.8956\\<br>\end{aligned}<br>$</p>
+</blockquote>
+</li>
+<li><p>如果第二轮比赛确实发生了，分别求小明夺冠和小强卫冕的概率</p>
+<blockquote>
+<p>求条件概率，第二轮比赛确实发生的概率有：</p>
+<p>$<br>\begin{aligned}<br>P(R2) &amp;= P(A)^2 + P(A^c)^2 \\<br>&amp; = .6^2 + .4^2 \\<br>&amp; = .52<br>\end{aligned}<br>$</p>
+<p>在此基础上，我们要计算$P(M|R2)$和$P(D|R2)$</p>
+<p>$<br>\begin{aligned}<br>P(M|R2) &amp;= P(M \cap R2) / P(R2) \\<br>&amp; = .6^2 \times .5^2 / .52 \\<br>&amp; = .1731<br>\end{aligned}<br>$</p>
+<p>$<br>\begin{aligned}<br>P(D|R2) &amp;= P(D \cap R2) / P(R2) \\<br>&amp; =  (P(A)^2 \times P(B^c)+P(A)^2 \times P(B) \times P(B^c) \\<br>&amp; + P(A^c)^2 \times P(C^c)+P(A^c)^2 \times P(C) \times P(C^c))/P(R2) \\<br>&amp;=(.6^2 \times .5+.6^2 \times.5 \times  .5+.4^2 \times .7+.4^2\times.3 \times .7)/.52 \\<br>&amp; = .7992<br>\end{aligned}<br>$</p>
+</blockquote>
+</li>
+<li><p>如果第二轮确实发生了，但只进行了一场，那么小明在第一轮胜出的条件概率是多少？</p>
+<blockquote>
+<p>“第二轮只进行一场比赛就结束”记为事件$L$</p>
+<p>$<br>\begin{aligned}<br>P(L) &amp;= P(A)^2 \times P(B^c) + P(A^c)^2 \times P(C^c) \\<br>&amp;= .6^2 \times .5 + .4^2 \times .7 \\<br>&amp;= .292<br>\end{aligned}<br>$</p>
+<p>将“小明赢得第一轮”记为事件AA，则这个问题实际上是要求解$P(AA|L)$:</p>
+<p>$<br>\begin{aligned}<br>P(AA|L) &amp;= P(AA \cap L)/P(L) \\<br>&amp;= .6^2 \times .5 / .292 \\<br>&amp;= .6164<br>\end{aligned}<br>$</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="结局二-小明碰运气"><a href="#结局二-小明碰运气" class="headerlink" title="结局二 小明碰运气"></a>结局二 小明碰运气</h3><blockquote>
+<p>房间的三个部分均为独立事件，那么我们可以先拆看分别看这三个事件的概率$P1$, $P2$, $P3$:</p>
+<p>$<br>\begin{aligned}<br>P1 = p<br>\end{aligned}<br>$</p>
+<p>第三部分只要两个门至少有一个们能打开，就可以通过，那么我们只需要计算两个门都不能打开的概率，然后用$1$减去此概率即可：</p>
+<p>$<br>\begin{aligned}<br>P3 &amp;= 1 - (1-p)^2<br>\end{aligned}<br>$</p>
+<p>第二部分较复杂，三个并联的门作为一组和另一个门串联在一起，然后这个大组合又跟另一个门并联在一起。姑且将这两条线各自通畅视为事件$G1$和$G2$，$G1$又分为 $G11$ 和 $G12$。类似房间第三部分通路的计算逻辑，如果这三组都不通，则小明无法通过房间的第二部分。</p>
+<p>$<br>\begin{aligned}<br>P(G11) &amp;= 1-(1-p)^3 \\<br>P(G1^c) &amp;= 1 - P(G11) \times P(G12) \\<br>&amp;= 1 - \{1-[1 -(1-p)^3]\} \times p) \\<br>&amp;= 1 - p \times (1-p)^3 \\<br>P(G2^c) &amp;= 1-p \\<br>P2 &amp;= 1- P(G1^c) \times P(G2^c) \\<br>&amp; = 1 - (1-p) \times [1 - p \times (1-p)^3]<br>\end{aligned}<br>$</p>
+<p>整合起来，小明通过这个房间最终拿到钱的概率是：</p>
+<p>$<br>\begin{aligned}<br>P &amp;= P1 \times P3 \times P2 \\<br>&amp;= p \times [1 - (1-p)^2] \times \{1 - (1-p) \times [1 - p \times (1-p)^3]\}<br>\end{aligned}<br>$</p>
+<p>小明掐指一算……觉得还是要个计算器算得快……</p>
+</blockquote>
+<h3 id="结局三-小明寻情记"><a href="#结局三-小明寻情记" class="headerlink" title="结局三 小明寻情记"></a>结局三 小明寻情记</h3><p>先把事件列出来：</p>
+<blockquote>
+<ul>
+<li>小明去A城: $P(A) = 0.4$</li>
+<li>小明去B城: $P(B) = 0.6$</li>
+<li>老师在A城找到小明: $P(F|A) = 0.25$</li>
+<li>老师在B城找到小明: $P(F|B) = 0.15$</li>
+<li>老师第1天找到小明并带回: $P(R_1|F) = 1$</li>
+<li>老师第i天$(i&gt;1)$找到小明并带回: $P(R_i|F) = 2/(i+1)$</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="概率之外的东西"><a href="#概率之外的东西" class="headerlink" title="概率之外的东西"></a>概率之外的东西</h2><p>写这篇其实也是想看看hexo现在公式转化的功能有没有健全。<br>在没有添加任何plugin的情况下，已经可以写出如上的公式了。<br>要注意的是表示公式换行的<code>\\</code>以及表示花括号的<code>\{</code>和<code>\}</code>，都需要在左边额外添加一个<code>\</code>用于hexo的编译。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数学/" rel="tag">#数学</a>
+          
+            <a href="/tags/概率/" rel="tag">#概率</a>
+          
+            <a href="/tags/MIT/" rel="tag">#MIT</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/19/Codage-21-schedule-r-script-tasks/" rel="prev">WIN7定期自动运行R脚本</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/14/Langage-6-francais-grammaire-6/" rel="next">法语语法拾遗(六)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/02/16/Math-1-prob-1/"
+                   data-title="书呆子的概率题" data-url="http://elliott828.github.io/2016/02/16/Math-1-prob-1/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar_storm_cat_white.png" alt="Papa Cochon" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Papa Cochon</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">70</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name"></p>
+            
+              <span class="links-of-author-item">
+              <a href="http://monkey0105.github.io/" target="_blank">大师兄</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#故事一-小明打乒乓"><span class="nav-number">1.</span> <span class="nav-text">故事一 小明打乒乓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故事二-小明碰运气"><span class="nav-number">2.</span> <span class="nav-text">故事二 小明碰运气</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故事三-小明寻情记"><span class="nav-number">3.</span> <span class="nav-text">故事三 小明寻情记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小明来一本正经地揭晓答案"><span class="nav-number">4.</span> <span class="nav-text">小明来一本正经地揭晓答案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结局一-小明打乒乓"><span class="nav-number">4.1.</span> <span class="nav-text">结局一 小明打乒乓</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结局二-小明碰运气"><span class="nav-number">4.2.</span> <span class="nav-text">结局二 小明碰运气</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结局三-小明寻情记"><span class="nav-number">4.3.</span> <span class="nav-text">结局三 小明寻情记</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率之外的东西"><span class="nav-number">5.</span> <span class="nav-text">概率之外的东西</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Papa Cochon</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="visit-statistics">
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<span id="busuanzi_container_site_pv">
+		<span id="busuanzi_value_site_pv"></span> hits from
+	</span>
+	
+	<span id="busuanzi_container_site_uv">
+		<span id="busuanzi_value_site_uv"></span> visitors 
+	</span>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"papacochon"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

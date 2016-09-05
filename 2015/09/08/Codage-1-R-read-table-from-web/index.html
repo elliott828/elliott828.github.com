@@ -1,0 +1,745 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="google-site-verification" content="-hIKy4njeS0VoSYzKTofmv6kqKt5CyTP4IVIlIWh1N0" />
+<meta name="baidu-site-verification" content="14CLULlEjC" />
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="R,dplyr,RMySQL,XML,quantmod," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="For many quantitative analysis, we often consider factors such climate or economics data. Those data are usually displayed as tables on the websites and can be collected from there. However, to copy-p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scraping Data Table from Website by R">
+<meta property="og:url" content="http://elliott828.github.io/2015/09/08/Codage-1-R-read-table-from-web/index.html">
+<meta property="og:site_name" content="Exity">
+<meta property="og:description" content="For many quantitative analysis, we often consider factors such climate or economics data. Those data are usually displayed as tables on the websites and can be collected from there. However, to copy-p">
+<meta property="og:updated_time" content="2015-11-13T07:02:36.107Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scraping Data Table from Website by R">
+<meta name="twitter:description" content="For many quantitative analysis, we often consider factors such climate or economics data. Those data are usually displayed as tables on the websites and can be collected from there. However, to copy-p">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Scraping Data Table from Website by R | Exity </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '68396327-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?00cfd9a9530e4098a08a17043202505a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Exity</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'f-s39SMgF52UH9GHejVp','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Scraping Data Table from Website by R
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-09-08T22:11:37+08:00" content="2015-09-08">
+            2015-09-08
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Codage-编程/" itemprop="url" rel="index">
+                  <span itemprop="name">Codage|编程</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/08/Codage-1-R-read-table-from-web/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/08/Codage-1-R-read-table-from-web/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>For many quantitative analysis, we often consider factors such climate or economics data. Those data are usually displayed as tables on the websites and can be collected from there. However, to copy-paste with EXCEL is an extremely inefficient way.<br>We can use R to read data directly from the web pages and store them uniformly without too may data clean steps.<br><a id="more"></a><br>To be clarified, most of the statistical models are <strong>not instantly renewed</strong>. The “instant” here means along with the data increase by time, the model need to be / can be renewed in the same time or in a short time.</p>
+<p>Our task is to realize a semi-automated web data scraping program, whenever a modeling refresh is needed, the raw data should be prepared.<br>So we need to realize 2 things:</p>
+<ul>
+<li>read data by specifying various arguments;</li>
+<li>store the data into local data base server.</li>
+</ul>
+<p>Here we take 2 examples:</p>
+<ul>
+<li>Climate Data (daily)</li>
+<li>Stock Index (daily)</li>
+</ul>
+<p>Several packages need to be loaded before hand.<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span>(XML, quietly = <span class="literal">T</span>, warn.conflicts = <span class="literal">F</span>)</div><div class="line"><span class="keyword">require</span>(quantmod, quietly = <span class="literal">T</span>, warn.conflicts = <span class="literal">F</span>)</div><div class="line"><span class="keyword">require</span>(RMySQL, quietly = <span class="literal">T</span>, warn.conflicts = <span class="literal">F</span>)</div><div class="line"><span class="keyword">require</span>(dplyr, quietly = <span class="literal">T</span>, warn.conflicts = <span class="literal">F</span>)</div></pre></td></tr></table></figure></p>
+<h2 id="Climate-Data-Collection-XML-readHTMLTable"><a href="#Climate-Data-Collection-XML-readHTMLTable" class="headerlink" title="Climate Data Collection - XML::readHTMLTable"></a>Climate Data Collection - XML::readHTMLTable</h2><p>In XML package, there is a function which enable R to directly read tables from website (when it really contains tables).<br>Let’s take a look on this function first:<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">readHTMLTable(doc, header = <span class="literal">NA</span>,</div><div class="line">              colClasses = <span class="literal">NULL</span>, skip.rows = integer(), trim = <span class="literal">TRUE</span>,</div><div class="line">              elFun = xmlValue, as.data.frame = <span class="literal">TRUE</span>, which = integer(),</div><div class="line">              <span class="keyword">...</span>)</div></pre></td></tr></table></figure></p>
+<p><code>readHTMLTable()</code> inherits <code>read.table()</code> in <code>base</code> package. You can specify more arguments than what you see here if you are familiar with the latter function.<br><code>doc</code> requires a HTML document - either a file name or a URL. To simplify it, we can directly assign a URL to it.<br><code>which</code> an integer vector identifying which tables to return from within the document. This applies to the method for the document, not individual tables. To judge the number of tables, you could inspect the elements of the website and count the number of <code>&lt;table&gt;</code> tags.<br>We use “<a href="http://en.tutiempo.net/climate/" target="_blank" rel="external">http://en.tutiempo.net/climate/</a>“ for gathering the climate data. The data in this website is on city basis. By selecting a city, year and month (i.e. China -&gt; Beijing -&gt; 2015 -&gt; jun), you can see a URL like “<a href="http://en.tutiempo.net/climate/06-2015/ws-545110.html" target="_blank" rel="external">http://en.tutiempo.net/climate/06-2015/ws-545110.html</a>“.<br>Open this page, there are 2 tables, one for climate data and one for data field interpretation. Right click on that page, select <code>Inspect elements</code>, it’s also not hard to find 2 <code>&lt;table&gt;</code> tags.<br>To read the first table, specify the table number <code>which = 1</code>:<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">webtable &lt;- readHTMLTable(http://en.tutiempo.net/climate/<span class="number">06</span>-<span class="number">2015</span>/ws-<span class="number">545110.</span>html,</div><div class="line">                          header = <span class="literal">T</span>, which = <span class="number">1</span>, stringsAsFactors = <span class="literal">F</span></div></pre></td></tr></table></figure></p>
+<p>What if you want to download data of different countries and different period?<br>Noticed that the URL is composed of 3 parts, take the previous case for instance.</p>
+<ul>
+<li>head: “<a href="http://en.tutiempo.net/climate/" target="_blank" rel="external">http://en.tutiempo.net/climate/</a>“</li>
+<li>month-year: “06-2015”</li>
+<li>country-city code: “/ws-545110.html”</li>
+</ul>
+<p>Changing the latter 2 parts, you could collect as many info as you want.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">GrabClimate &lt;- <span class="keyword">function</span>(year, month, country)&#123;</div><div class="line">  month &lt;- paste(ifelse(nchar(month)==<span class="number">1</span>,<span class="string">"0"</span>,<span class="string">""</span>), month, sep = <span class="string">""</span>)</div><div class="line"></div><div class="line">  <span class="comment"># link_tail: the collection of main APAC countries</span></div><div class="line">  link_tail &lt;- c(`AUSTRALIA` = <span class="string">"/ws-947680.html"</span>, <span class="comment"># SYDNEY</span></div><div class="line">                 `CHINA` = <span class="string">"/ws-545110.html"</span>, <span class="comment"># BEIJING</span></div><div class="line">                 `INDIA` = <span class="string">"/ws-421820.html"</span>, <span class="comment"># NEW DEHLI</span></div><div class="line">                 `INDONESIA` = <span class="string">"/ws-967490.html"</span>, <span class="comment"># JAKARTA</span></div><div class="line">                 `JAPAN` = <span class="string">"/ws-476620.html"</span>, <span class="comment"># TOKYO</span></div><div class="line">                 `KOREA` = <span class="string">"/ws-471080.html"</span>, <span class="comment"># SEOUL</span></div><div class="line">                 `MALAYSIA` = <span class="string">"/ws-486470.html"</span>, <span class="comment"># KUALA LUMPUR</span></div><div class="line">                 `NEW ZEALAND` = <span class="string">"/ws-934390.html"</span>, <span class="comment"># WELLINGTON</span></div><div class="line">                 `PHILIPPINES` = <span class="string">"/ws-984250.html"</span>, <span class="comment"># MANILA</span></div><div class="line">                 `THAILAND` = <span class="string">"/ws-484540.html"</span>, <span class="comment"># BANGKOK</span></div><div class="line">                 `TAIWAN` = <span class="string">"/ws-589680.html"</span>, <span class="comment"># TAIPEI</span></div><div class="line">                 `VIETNAM` = <span class="string">"/ws-488200.html"</span>)  <span class="comment"># HA NOI</span></div><div class="line"></div><div class="line">  <span class="comment"># the address need to be adjusted according to the country to be modeled</span></div><div class="line">  link &lt;- paste(<span class="string">"http://en.tutiempo.net/climate/"</span>, month, <span class="string">"-"</span>, year,</div><div class="line">                link_tail[toupper(country)], sep = <span class="string">""</span>)</div><div class="line"></div><div class="line">  webtable &lt;- readHTMLTable(link, header = <span class="literal">T</span>, which = <span class="number">1</span>, stringsAsFactors = <span class="literal">F</span>,</div><div class="line">                            na.strings = c(<span class="string">"-"</span>))</div><div class="line"></div><div class="line">  <span class="comment"># Add 2 columns and remove the bottom 2 lines</span></div><div class="line">  webtable &lt;- data.frame(Country = toupper(country), Year = as.numeric(year),</div><div class="line">                         Month = as.numeric(month), webtable[<span class="number">1</span>:(nrow(webtable)-<span class="number">2</span>),])</div><div class="line"></div><div class="line">  <span class="comment"># Remove unuseful columns and rename the table</span></div><div class="line">  webtable &lt;- select(webtable, -(VV:VG))</div><div class="line">  names(webtable) &lt;- c(<span class="string">"Country"</span>, <span class="string">"Year"</span>, <span class="string">"Month"</span>, <span class="string">"Day"</span>, <span class="string">"Avg_Temp"</span>, <span class="string">"Max_Temp"</span>,</div><div class="line">                       <span class="string">"Min_Temp"</span>, <span class="string">"Atm_Pressure"</span>, <span class="string">"Avg_Humidity"</span>, <span class="string">"Rainfall"</span>,</div><div class="line">                       <span class="string">"Ind_Rain_Drizzle"</span>, <span class="string">"Ind_Snow"</span>, <span class="string">"Ind_Storm"</span>, <span class="string">"Ind_Fog"</span>)</div><div class="line">  rownames(webtable) &lt;- <span class="literal">NULL</span></div><div class="line"></div><div class="line">  <span class="comment"># Replace "-" by NA.</span></div><div class="line">  webtable &lt;- mutate(webtable,</div><div class="line">                     Day = as.numeric(Day),</div><div class="line">                     Ind_Rain_Drizzle = ifelse(Ind_Rain_Drizzle == <span class="string">"o"</span>, <span class="number">1</span>, <span class="number">0</span>),</div><div class="line">                     Ind_Snow = ifelse(Ind_Snow == <span class="string">"o"</span>, <span class="number">1</span>, <span class="number">0</span>),</div><div class="line">                     Ind_Storm = ifelse(Ind_Storm == <span class="string">"o"</span>, <span class="number">1</span>, <span class="number">0</span>),</div><div class="line">                     Ind_Fog = ifelse(Ind_Fog == <span class="string">"o"</span>, <span class="number">1</span>, <span class="number">0</span>))</div><div class="line"></div><div class="line">  webtable</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Using this function in embedded loops you can get the full set of data (Suppose we assign the data to <code>climate</code>, we will use it later.).</p>
+<h2 id="Stock-Index-Data-Collection-quantmod-getSymbols"><a href="#Stock-Index-Data-Collection-quantmod-getSymbols" class="headerlink" title="Stock Index Data Collection - quantmod::getSymbols"></a>Stock Index Data Collection - quantmod::getSymbols</h2><p>In <code>quantmod</code> package, <code>getSymbols()</code> is well developed function. Specifying the index symbol, the function automatically returns the table read from Yahoo Finance (you can also set other website), and save it in the a variable named by the symbol. You can also specify the data start and end date.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># the list of major APAC stock index code</span></div><div class="line">sym_stock &lt;- c(`AUSTRALIA` = <span class="string">"^AORD"</span>, <span class="comment"># All Ordinaries</span></div><div class="line">               `CHINA` = <span class="string">"^SSEC"</span>, <span class="comment"># Shanghai Composite</span></div><div class="line">               `INDIA` = <span class="string">"^BSESN"</span>, <span class="comment"># Bombay BSE SENSEX / BSE 30</span></div><div class="line">               `INDONESIA` = <span class="string">"^JKSE"</span>, <span class="comment"># Jakarta Composite</span></div><div class="line">               `JAPAN` = <span class="string">"^N225"</span>, <span class="comment"># Tokyo Share Nikkei 225</span></div><div class="line">               `KOREA` = <span class="string">"^KS11"</span>, <span class="comment"># Seoul Composite</span></div><div class="line">               `MALAYSIA` = <span class="string">"^KLSE"</span>, <span class="comment"># FTSE Bursa Malaysia KLCI</span></div><div class="line">               `NEW ZEALAND` = <span class="string">"^NZ50"</span>, <span class="comment"># New Zealand NZX 50 Index</span></div><div class="line">               `PHILIPPINES` = <span class="string">"^PSI"</span>, <span class="comment"># Manila</span></div><div class="line">               `THAILAND` = <span class="string">"SET"</span>, <span class="comment"># BANGKOK</span></div><div class="line">               `TAIWAN` = <span class="string">"^TWII"</span>, <span class="comment"># Taiwan Weighted</span></div><div class="line">               `VIETNAM` = <span class="string">"VNM"</span>) <span class="comment"># Vietnam Index</span></div><div class="line"></div><div class="line">stock_ind &lt;- data.frame(matrix(numeric(), ncol = <span class="number">8</span>,</div><div class="line">                               dimnames = list(<span class="literal">NULL</span>,</div><div class="line">                                               c(<span class="string">"Country"</span>, <span class="string">"Date"</span>, <span class="string">"Open"</span>, <span class="string">"High"</span>, <span class="string">"Low"</span>,</div><div class="line">                                                 <span class="string">"Close"</span>, <span class="string">"Volumne"</span>, <span class="string">"AdjClose"</span>))))</div><div class="line"></div><div class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span>:<span class="number">12</span>)&#123;</div><div class="line">  <span class="comment"># auto.assign = F, do not assign the read table under the name of index code</span></div><div class="line">  temp &lt;- as.data.frame(suppressWarnings(getSymbols(sym_stock[i], auto.assign = <span class="literal">F</span>,</div><div class="line">                                                    from = <span class="string">"2013-01-01"</span>,</div><div class="line">                                                    to = <span class="string">"2015-07-31"</span>)))</div><div class="line">  names(temp) &lt;- c(<span class="string">"Open"</span>, <span class="string">"High"</span>, <span class="string">"Low"</span>, <span class="string">"Close"</span>, <span class="string">"Volumne"</span>, <span class="string">"AdjClose"</span>)</div><div class="line">  stock_ind &lt;- rbind(stock_ind, data.frame(Country = names(sym_stock)[i],</div><div class="line">                                           Date = rownames(temp), temp))</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Load-Data-to-MySQL"><a href="#Load-Data-to-MySQL" class="headerlink" title="Load Data to MySQL"></a>Load Data to MySQL</h2><p><code>dplyr</code> and <code>RMySQL</code> both provide method for R to connect to MySQL.<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># create a database "example"</span></div><div class="line">con &lt;- dbConnect(MySQL(), host = <span class="string">"xx.xxx.xxxx.xxx"</span>, port = <span class="number">3306</span>,</div><div class="line">                 user = <span class="string">"Admin"</span>, password = <span class="string">"Power_Overwhelming"</span>)</div><div class="line">dbSendQuery(con, <span class="string">"CREATE SCHEMA `example`"</span>)</div><div class="line"></div><div class="line"><span class="comment"># connection to MySQL db "example" using dplyr method</span></div><div class="line">con1 &lt;- src_mysql(dbname = <span class="string">"example"</span>, host = <span class="string">"xx.xxx.xxxx.xxx"</span>, port = <span class="number">3306</span>,</div><div class="line">                  user = <span class="string">"Admin"</span>, password = <span class="string">"Power_Overwhelming"</span>)</div><div class="line"></div><div class="line"><span class="comment"># connection to MySQL db "example" using RMySQL method</span></div><div class="line">con2 &lt;- dbConnect(MySQL(), host = <span class="string">"xx.xxx.xxxx.xxx"</span>, port = <span class="number">3306</span>, db = <span class="string">"example"</span>,</div><div class="line">                  user = <span class="string">"Admin"</span>, password = <span class="string">"Power_Overwhelming"</span>)</div></pre></td></tr></table></figure></p>
+<p>To create new tables, we can use <code>dplyr::copy_to</code> to create MySQL table.<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">copy_to(con1, climate, <span class="string">"climate"</span>, temporary = <span class="literal">F</span>)</div><div class="line">copy_to(con1, stock_ind, <span class="string">"stock"</span>, temporary = <span class="literal">F</span>)</div></pre></td></tr></table></figure></p>
+<p>If the table already exists:<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">db_insert_into(con2, table = <span class="string">"climate"</span>, value = climate)</div><div class="line">db_insert_into(con2, table = <span class="string">"stock"</span>, value = stock_ind)</div></pre></td></tr></table></figure></p>
+<p>Add index to optimize query speed:<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">dbSendQuery(con2, <span class="string">"ALTER TABLE climate</span></div><div class="line">            ADD KEY climate(Country, Year, Month, Day,</div><div class="line">                            Avg_Temp, Max_Temp, Min_Temp,</div><div class="line">                            Rainfall, Ind_Rain, Ind_Snow,</div><div class="line">                            Ind_Storm, Ind_Fog)")</div><div class="line">dbSendQuery(con2, <span class="string">"ALTER TABLE stock</span></div><div class="line">            ADD KEY stock(Open, High, Low, Close, Volumne, AdjClose)")</div></pre></td></tr></table></figure></p>
+<p>We can use <code>dplyr::tbl()</code> and a series of <code>dplyr</code> functions to manipulate data in MySQL databasess.</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/R/" rel="tag">#R</a>
+          
+            <a href="/tags/dplyr/" rel="tag">#dplyr</a>
+          
+            <a href="/tags/RMySQL/" rel="tag">#RMySQL</a>
+          
+            <a href="/tags/XML/" rel="tag">#XML</a>
+          
+            <a href="/tags/quantmod/" rel="tag">#quantmod</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/13/LaVie-2-new-life/" rel="prev">New Life</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/07/Pensee-1-Q-A-No.1/" rel="next">随想录1 - 人类智慧 vs. 人工智能</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/09/08/Codage-1-R-read-table-from-web/"
+                   data-title="Scraping Data Table from Website by R" data-url="http://elliott828.github.io/2015/09/08/Codage-1-R-read-table-from-web/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar_storm_cat_white.png" alt="Papa Cochon" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Papa Cochon</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">70</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">93</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name"></p>
+            
+              <span class="links-of-author-item">
+              <a href="http://monkey0105.github.io/" target="_blank">大师兄</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Climate-Data-Collection-XML-readHTMLTable"><span class="nav-number">1.</span> <span class="nav-text">Climate Data Collection - XML::readHTMLTable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stock-Index-Data-Collection-quantmod-getSymbols"><span class="nav-number">2.</span> <span class="nav-text">Stock Index Data Collection - quantmod::getSymbols</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-Data-to-MySQL"><span class="nav-number">3.</span> <span class="nav-text">Load Data to MySQL</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Papa Cochon</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="visit-statistics">
+	<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<span id="busuanzi_container_site_pv">
+		<span id="busuanzi_value_site_pv"></span> hits from
+	</span>
+	
+	<span id="busuanzi_container_site_uv">
+		<span id="busuanzi_value_site_uv"></span> visitors 
+	</span>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"papacochon"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
